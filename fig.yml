@@ -6,6 +6,6 @@ app:
    - .:/code
   command: php -S 0.0.0.0:8000 -t /code/app
   links:
-   - redis
-redis:
-  image: redis
+   - mongo
+mongo:
+  image: mongo
