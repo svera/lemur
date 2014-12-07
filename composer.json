@@ -1,5 +1,8 @@
 {
     "require": {
         "silex/silex": "~1.2",
+        "twig/twig": "*",
+        "doctrine/mongodb-odm": "@beta",
+        "neutron/mongo-odm-silex-provider": "*"
     }
 }
