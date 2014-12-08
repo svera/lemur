@@ -17,8 +17,7 @@ $app->register(new MongoDBODMServiceProvider(), array(
             'path' => array(
                 'app/models',
             ),
-            'namespace' => 'App\Models',
-            'alias'     => 'docs',
+            'namespace' => 'App\Models'
         ),
     ),    
 ));

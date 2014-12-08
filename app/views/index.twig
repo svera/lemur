@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Bootstrap 101 Template</title>
+    <title>Lemur</title>
 
     <!-- Bootstrap -->
     <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css" rel="stylesheet">
@@ -28,56 +28,26 @@
         </div>
         <div class="col-md-9">
           <h2>3 Pull requests pending merge</h2>
-          {{ dump(demos) }}
+
           <ul class="list-group">
-            <li class="list-group-item">
-              <div class="clearfix">
-                <h4 class="list-group-item-heading pull-left">List group item heading</h4>
-                <div class="pull-right">
-                  <span class="badge alert-success">
-                    <span class="glyphicon glyphicon-thumbs-up" aria-hidden="true"></span>
-                    &nbsp;2
-                  </span>
-                  <span class="badge alert-danger">
-                    <span class="glyphicon glyphicon-thumbs-down" aria-hidden="true"></span>
-                    &nbsp;14
-                  </span>
+            {% for demo in demos %}
+              <li class="list-group-item">
+                <div class="clearfix">
+                  <h4 class="list-group-item-heading pull-left">{{ demo.getName }}</h4>
+                  <div class="pull-right">
+                    <span class="badge alert-success">
+                      <span class="glyphicon glyphicon-thumbs-up" aria-hidden="true"></span>
+                      &nbsp;2
+                    </span>
+                    <span class="badge alert-danger">
+                      <span class="glyphicon glyphicon-thumbs-down" aria-hidden="true"></span>
+                      &nbsp;14
+                    </span>
+                  </div>
                 </div>
-              </div>
-              <p><em>Created by Sergio Vera <strong>3 days ago</strong></em></p>
-            </li>
-            <li class="list-group-item">
-              <div class="clearfix">
-                <h4 class="list-group-item-heading pull-left">List group item heading</h4>
-                <div class="pull-right">
-                  <span class="badge alert-success">
-                    <span class="glyphicon glyphicon-thumbs-up" aria-hidden="true"></span>
-                    &nbsp;2
-                  </span>
-                  <span class="badge alert-danger">
-                    <span class="glyphicon glyphicon-thumbs-down" aria-hidden="true"></span>
-                    &nbsp;14
-                  </span>
-                </div>
-              </div>
-              <p><em>Created by Sergio Vera <strong>3 days ago</strong></em></p>
-            </li>
-            <li class="list-group-item">
-              <div class="clearfix">
-                <h4 class="list-group-item-heading pull-left">List group item heading</h4>
-                <div class="pull-right">
-                  <span class="badge alert-success">
-                    <span class="glyphicon glyphicon-thumbs-up" aria-hidden="true"></span>
-                    &nbsp;2
-                  </span>
-                  <span class="badge alert-danger">
-                    <span class="glyphicon glyphicon-thumbs-down" aria-hidden="true"></span>
-                    &nbsp;14
-                  </span>
-                </div>
-              </div>
-              <p><em>Created by Sergio Vera <strong>3 days ago</strong></em></p>
-            </li>
+                <p><em>Created by Sergio Vera <strong>3 days ago</strong></em></p>
+              </li>
+            {% endfor %}
           </ul>
         </div>
       </div>
