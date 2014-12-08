@@ -4,5 +4,8 @@
         "twig/twig": "*",
         "doctrine/mongodb-odm": "@beta",
         "neutron/mongo-odm-silex-provider": "*"
+    },
+    "autoload": {
+        "psr-4": { "App\\Models\\": "app/models/" }
     }
 }
