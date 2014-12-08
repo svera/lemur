@@ -17,7 +17,7 @@ $app->register(new MongoDBODMServiceProvider(), array(
             'path' => array(
                 'app/models',
             ),
-            'namespace' => 'App\Models\Request',
+            'namespace' => 'App\Models',
             'alias'     => 'docs',
         ),
     ),    
@@ -34,9 +34,10 @@ $app->get('/', function() use ($app) {
     $app['doctrine.odm.mongodb.dm']->persist($demo);
     $app['doctrine.odm.mongodb.dm']->flush();
     $demos = $app['doctrine.odm.mongodb.dm']
-    ->getRepository('docs::Demo')
+    ->getRepository('App\\Models\\Request')
     ->findAll();
     return $app['twig']->render('index.twig', array(
+        'demos' => $demos
     ));
 });
 
