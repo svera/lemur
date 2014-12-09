@@ -2,9 +2,10 @@ app:
   build: .
   ports:
    - "8000:8000"
-  command: php -S 0.0.0.0:8000 -t /code/app
+  command: php -S 0.0.0.0:8000 -t /code/web
   volumes:
-  - ./app:/code/app
+  - ./web:/code/web
+  - ./src:/code/src 
   links:
    - mongo
 mongo:

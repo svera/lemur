@@ -1,5 +1,5 @@
 <?php
-namespace App\Models;
+namespace Src\Models;
 use Doctrine\ODM\MongoDB\Mapping\Annotations as ODM;
 
 /** @ODM\Document */
@@ -13,11 +13,11 @@ class Request
 
     public function setName($name)
     {
-    	$this->name = $name;
+        $this->name = $name;
     }
 
     public function getName()
     {
         return $this->name;
-    }    
+    }
 }
