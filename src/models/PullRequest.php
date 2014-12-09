@@ -25,7 +25,7 @@ class PullRequest
     /** @ODM\String */
     private $createdBy;
 
-    /** @ODM\Timestamp */
+    /** @ODM\String */
     private $createdAt;
 
     /** @ODM\String */
@@ -88,9 +88,9 @@ class PullRequest
         return $this->createdBy;
     }
 
-    public function setCreatedAt($timestamp)
+    public function setCreatedAt($dateTime)
     {
-        $this->createdAt = $timestamp;
+        $this->createdAt = $dateTime;
     }
 
     public function getCreatedAt()

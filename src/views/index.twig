@@ -35,6 +35,10 @@
                   <div class="clearfix">
                     <h4 class="list-group-item-heading pull-left">{{ pullRequest.getName }}</h4>
                     <div class="pull-right">
+                      <span class="badge">
+                        <span class="glyphicon glyphicon-comment" aria-hidden="true"></span>
+                        &nbsp;{{ pullRequest.getNumberComments }}
+                      </span>
                       <span class="badge alert-success">
                         <span class="glyphicon glyphicon-thumbs-up" aria-hidden="true"></span>
                         &nbsp;{{ pullRequest.getNumberApprovals }}
@@ -45,7 +49,7 @@
                       </span>
                     </div>
                   </div>
-                  <p><em>Created by {{ pullRequest.getCreatedBy }} <time datetime="">{{ pullRequest.getCreatedAt }}</time></em></p>
+                  <p><em>Created by {{ pullRequest.getCreatedBy }} <time datetime="{{ pullRequest.getCreatedAt }}">{{ pullRequest.getCreatedAt }}</time></em></p>
                 </li>
               {% endfor %}
             </ul>
