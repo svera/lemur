@@ -7,7 +7,7 @@ use Doctrine\ODM\MongoDB\Mapping\Annotations as ODM;
 /** @ODM\Document */
 class PullRequest
 {
-    /** @ODM\Id */
+    /** @ODM\Id(strategy="NONE") */
     private $id;
 
     /** @ODM\String */
@@ -36,6 +36,16 @@ class PullRequest
         $this->numberComments = 0;
         $this->numberApprovals = 0;
         $this->numberDisapprovals = 0;
+    }
+
+    public function setId($id)
+    {
+        $this->id = $id;
+    }
+
+    public function getId()
+    {
+        return $this->id;
     }
 
     public function setName($name)
