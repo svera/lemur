@@ -37,25 +37,27 @@
                 <li class="list-group-item">
                   <div class="clearfix">
                     <h4 class="list-group-item-heading pull-left">
-                      {% if pullRequest.vcs == 'Github' %}
+                      {% if pullRequest.vcs == 'github' %}
                         <span class="fa fa-github" aria-hidden="true"></span>&nbsp;
                       {% endif %}
                       <a href="{{ pullRequest.getHtmlUrl }}">{{ pullRequest.getName }}</a>
                     </h4>
-                    <div class="pull-right">
-                      <span class="badge">
-                        <span class="glyphicon glyphicon-comment" aria-hidden="true"></span>
-                        &nbsp;{{ pullRequest.getNumberComments }}
-                      </span>
-                      <span class="badge alert-success">
-                        <span class="glyphicon glyphicon-thumbs-up" aria-hidden="true"></span>
-                        &nbsp;{{ pullRequest.getNumberApprovals }}
-                      </span>
-                      <span class="badge alert-danger">
-                        <span class="glyphicon glyphicon-thumbs-down" aria-hidden="true"></span>
-                        &nbsp;{{ pullRequest.getNumberDisapprovals }}
-                      </span>
-                    </div>
+                    {% if pullRequest.vcs == 'github' %}
+                      <div class="pull-right">
+                        <span class="badge">
+                          <span class="glyphicon glyphicon-comment" aria-hidden="true"></span>
+                          &nbsp;{{ pullRequest.getNumberComments }}
+                        </span>
+                        <span class="badge alert-success">
+                          <span class="glyphicon glyphicon-thumbs-up" aria-hidden="true"></span>
+                          &nbsp;{{ pullRequest.getNumberApprovals }}
+                        </span>
+                        <span class="badge alert-danger">
+                          <span class="glyphicon glyphicon-thumbs-down" aria-hidden="true"></span>
+                          &nbsp;{{ pullRequest.getNumberDisapprovals }}
+                        </span>
+                      </div>
+                    {% endif %}
                   </div>
                   <p><em>Created by {{ pullRequest.getCreatedBy }} <time class="timeago" datetime="{{ pullRequest.getCreatedAt }}">{{ pullRequest.getCreatedAt }}</time></em></p>
                 </li>

@@ -8,6 +8,7 @@ use Symfony\Component\HttpFoundation\Request;
 class Github implements Vcs
 {
     private $payload;
+    const VCSNAME = 'github';
 
     public function __construct(Request $httpRequest)
     {
@@ -24,7 +25,7 @@ class Github implements Vcs
         $pullRequest->setNumberComments(0);
         $pullRequest->setNumberApprovals(0);
         $pullRequest->setNumberDisapprovals(0);
-        $pullRequest->setVcs('github');
+        $pullRequest->setVcs($this->VCSNAME);
         $pullRequest->setHtmlUrl($this->payload['pull_request']['html_url']);
         return $pullRequest;
     }
@@ -60,7 +61,12 @@ class Github implements Vcs
     {
         $pullRequest = $db
             ->getRepository('Src\\Models\\PullRequest')
-            ->find($this->payload['pull_request']['id']);
+            ->findOneBy(
+                array(
+                    'id' => $this->payload['pull_request']['id'],
+                    'vcs' => $this->VCSNAME
+                )
+            );
         if ($pullRequest) {
             return $pullRequest;
         }

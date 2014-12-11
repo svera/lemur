@@ -3,6 +3,7 @@
 namespace Src\Models;
 
 use Src\Models\Github;
+use Src\Models\Gitlab;
 use Symfony\Component\HttpFoundation\Request;
 
 class VcsFactory
@@ -11,6 +12,9 @@ class VcsFactory
     {
         if ($vcsName == 'github') {
             return new Github($httpRequest);
+        }
+        if ($vcsName == 'gitlab') {
+            return new Gitlab($httpRequest);
         }
     }
 }
