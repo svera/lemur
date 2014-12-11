@@ -5,7 +5,6 @@ use Symfony\Component\HttpFoundation\Response;
 use Src\Models\PullRequest;
 use Src\Models\VcsFactory;
 
-
 $app->get('/', function() use ($app) {
     $pullRequests = $app['doctrine.odm.mongodb.dm']
     ->getRepository('Src\\Models\\PullRequest')
