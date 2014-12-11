@@ -3,6 +3,7 @@
 namespace Src\Models;
 
 use Src\Models\PullRequest;
+use Symfony\Component\HttpFoundation\Request;
 
 class Github implements Vcs
 {
@@ -10,7 +11,7 @@ class Github implements Vcs
 
     public function __construct(Request $httpRequest)
     {
-        $this->payload = json_decode($httpRequest->get('payload')), true);
+        $this->payload = json_decode($httpRequest->get('payload'), true);
     }
 
     public function createPullRequest()
@@ -23,7 +24,7 @@ class Github implements Vcs
         $pullRequest->setNumberComments(0);
         $pullRequest->setNumberApprovals(0);
         $pullRequest->setNumberDisapprovals(0);
-        $pullRequest->setVcs('Github');
+        $pullRequest->setVcs('github');
         $pullRequest->setHtmlUrl($this->payload['pull_request']['html_url']);
         return $pullRequest;
     }

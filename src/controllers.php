@@ -3,7 +3,8 @@
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Src\Models\PullRequest;
-use Src\Models\Github;
+use Src\Models\VcsFactory;
+
 
 $app->get('/', function() use ($app) {
     $pullRequests = $app['doctrine.odm.mongodb.dm']
@@ -14,8 +15,8 @@ $app->get('/', function() use ($app) {
     ));
 });
 
-$app->post('/{vcs}/pullRequest', function(Request $httpRequest) use ($app) {
-    $vcs = new Github($httpRequest);
+$app->post('/{vcsName}/pullRequest', function(Request $httpRequest, $vcsName) use ($app) {
+    $vcs = VcsFactory::create($vcsName, $httpRequest);
     if ($vcs->isCreatePullRequestAction()) {
         $pullRequest = $vcs->createPullRequest();
         $app['doctrine.odm.mongodb.dm']->persist($pullRequest);
@@ -34,8 +35,8 @@ $app->post('/{vcs}/pullRequest', function(Request $httpRequest) use ($app) {
     }
 });
 
-$app->post('/{vcs}/pullRequestComment', function(Request $httpRequest) use ($app) {
-    $vcs = new Github($httpRequest);
+$app->post('/{vcsName}/pullRequestComment', function(Request $httpRequest, $vcsName) use ($app) {
+    $vcs = VcsFactory::create($vcsName, $httpRequest);
     if ($vcs->isCreateCommentAction()) {
         $pullRequest = $vcs->updateComments($pullRequest);
         if ($pullRequest) {
