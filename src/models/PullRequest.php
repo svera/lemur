@@ -31,6 +31,9 @@ class PullRequest
     /** @ODM\String */
     private $vcs;
 
+    /** @ODM\String */
+    private $htmlUrl;
+
     public function __construct()
     {
         $this->numberComments = 0;
@@ -116,5 +119,15 @@ class PullRequest
     public function getVcs()
     {
         return $this->vcs;
+    }
+
+    public function setHtmlUrl($url)
+    {
+        $this->htmlUrl = $url;
+    }
+
+    public function getHtmlUrl()
+    {
+        return $this->htmlUrl;
     }
 }

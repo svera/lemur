@@ -33,7 +33,9 @@
               {% for pullRequest in pullRequests %}
                 <li class="list-group-item">
                   <div class="clearfix">
-                    <h4 class="list-group-item-heading pull-left">{{ pullRequest.getName }}</h4>
+                    <h4 class="list-group-item-heading pull-left">
+                      <a href="{{ pullRequest.getHtmlUrl }}">{{ pullRequest.getName }}</a>
+                    </h4>
                     <div class="pull-right">
                       <span class="badge">
                         <span class="glyphicon glyphicon-comment" aria-hidden="true"></span>

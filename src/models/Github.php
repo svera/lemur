@@ -1,0 +1,68 @@
+<?php
+
+namespace Src\Models;
+
+use Src\Models\PullRequest;
+
+class Github implements Vcs
+{
+    private $payload;
+
+    public function __construct(Request $httpRequest)
+    {
+        $this->payload = json_decode($httpRequest->get('payload')), true);
+    }
+
+    public function createPullRequest()
+    {
+        $pullRequest = new PullRequest();
+        $pullRequest->setId($this->payload['pull_request']['id']);
+        $pullRequest->setName($this->payload['pull_request']['title']);
+        $pullRequest->setCreatedBy($this->payload['pull_request']['user']['login']);
+        $pullRequest->setCreatedAt($this->payload['pull_request']['created_at']);
+        $pullRequest->setNumberComments(0);
+        $pullRequest->setNumberApprovals(0);
+        $pullRequest->setNumberDisapprovals(0);
+        $pullRequest->setVcs('Github');
+        $pullRequest->setHtmlUrl($this->payload['pull_request']['html_url']);
+        return $pullRequest;
+    }
+
+    public function isCreatePullRequestAction()
+    {
+        return $this->payload['action'] == 'opened' || $this->payload['action'] == 'reopened';
+    }
+
+    public function isClosePullRequestAction()
+    {
+        return $this->payload['action'] == 'closed';
+    }
+
+    public function isCommentCreatedAction()
+    {
+        return $this->payload['action'] == 'created';
+    }
+
+    public function updateComments(PullRequest $pullRequest)
+    {
+        $pullRequest->setNumberComments($pullRequest->getNumberComments() + 1);
+        if (strpos($this->payload['comment']['body'], '+1') !== false) {
+            $pullRequest->setNumberApprovals($pullRequest->getNumberApprovals() + 1);
+        }
+        if (strpos($this->payload['comment']['body'], '-1') !== false) {
+            $pullRequest->setNumberApprovals($pullRequest->getNumberDisapprovals() + 1);
+        }
+        return $PullRequest;
+    }
+
+    public function loadPullRequest($db)
+    {
+        $pullRequest = $db
+            ->getRepository('Src\\Models\\PullRequest')
+            ->find($this->payload['pull_request']['id']);
+        if ($pullRequest) {
+            return $pullRequest;
+        }
+        return false;
+    }
+}
