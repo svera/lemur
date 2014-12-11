@@ -5,15 +5,9 @@ namespace Src\Models;
 use Src\Models\PullRequest;
 use Symfony\Component\HttpFoundation\Request;
 
-class Github implements Vcs
+class Github extends Vcs implements VcsInterface
 {
-    private $payload;
     const VCSNAME = 'github';
-
-    public function __construct(Request $httpRequest)
-    {
-        $this->payload = $httpRequest->request->all();
-    }
 
     public function createPullRequest()
     {
