@@ -12,7 +12,7 @@ class Gitlab implements Vcs
 
     public function __construct(Request $httpRequest)
     {
-        $this->payload = json_decode($httpRequest->get('payload'), true);
+        $this->payload = $httpRequest->request->all();
     }
 
     public function createPullRequest()

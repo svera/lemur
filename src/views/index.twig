@@ -4,7 +4,6 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta http-equiv="refresh" content="10">
     <title>{{ pullRequests|length }} pull requests pending | Lemur</title>
     <link rel="shortcut icon" href="images/favicon.ico">
     <link rel="icon" type="image/png" href="images/favicon-192x192.png" sizes="192x192">
@@ -30,7 +29,7 @@
         <div class="col-md-12">
           {% if pullRequests|length > 0 %}
             <h2>{{ pullRequests|length }} Pull requests pending merge</h2>
-            <ul class="list-group">
+            <ul class="list-group" id="pull-requests">
               {% for pullRequest in pullRequests %}
                 <li class="list-group-item">
                   <div class="clearfix">
@@ -75,5 +74,8 @@
     jQuery(document).ready(function() {
       jQuery("time.timeago").timeago();
     });
+    setInterval(function () {
+      $('#pull_requests').load(document.URL +  ' #pull_requests');
+    }, 10000);
   </script>
 </html>
