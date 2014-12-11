@@ -27,14 +27,7 @@
   <body>
     <div class="container">
       <div class="row">
-        <div class="col-md-3">
-          <h3>Statistics</h3>
-          <dl class="dl-horizontal">
-            <dt>Pull request mean time</dt>
-            <dd>02:52</dd>
-          </dl>
-        </div>
-        <div class="col-md-9">
+        <div class="col-md-12">
           {% if pullRequests|length > 0 %}
             <h2>{{ pullRequests|length }} Pull requests pending merge</h2>
             <ul class="list-group">
@@ -44,6 +37,9 @@
                     <h4 class="list-group-item-heading pull-left">
                       {% if pullRequest.vcs == 'github' %}
                         <span class="fa fa-github" aria-hidden="true"></span>&nbsp;
+                      {% endif %}
+                      {% if pullRequest.vcs == 'gitlab' %}
+                        <span class="fa fa-git" aria-hidden="true"></span>&nbsp;
                       {% endif %}
                       <a href="{{ pullRequest.getHtmlUrl }}">{{ pullRequest.getName }}</a>
                     </h4>

@@ -22,7 +22,7 @@ class Gitlab implements Vcs
         $pullRequest->setName($this->payload['object_attributes']['title']);
         $pullRequest->setCreatedBy($this->payload['user']['name']);
         $pullRequest->setCreatedAt($this->payload['object_attributes']['created_at']);
-        $pullRequest->setVcs($this->VCSNAME);
+        $pullRequest->setVcs(self::VCSNAME);
         $pullRequest->setHtmlUrl($this->payload['object_attributes']['source']['http_url']);
         return $pullRequest;
     }
@@ -54,7 +54,7 @@ class Gitlab implements Vcs
             ->findOneBy(
                 array(
                     'id' => $this->payload['object_attributes']['id'],
-                    'vcs' => $this->VCSNAME
+                    'vcs' => self::VCSNAME
                 )
             );
         if ($pullRequest) {

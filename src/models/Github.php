@@ -25,7 +25,7 @@ class Github implements Vcs
         $pullRequest->setNumberComments(0);
         $pullRequest->setNumberApprovals(0);
         $pullRequest->setNumberDisapprovals(0);
-        $pullRequest->setVcs($this->VCSNAME);
+        $pullRequest->setVcs(self::VCSNAME);
         $pullRequest->setHtmlUrl($this->payload['pull_request']['html_url']);
         return $pullRequest;
     }
@@ -64,7 +64,7 @@ class Github implements Vcs
             ->findOneBy(
                 array(
                     'id' => $this->payload['pull_request']['id'],
-                    'vcs' => $this->VCSNAME
+                    'vcs' => self::VCSNAME
                 )
             );
         if ($pullRequest) {
