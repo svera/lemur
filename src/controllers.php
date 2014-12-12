@@ -3,7 +3,7 @@
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Src\Models\PullRequest;
-use Src\Platforms\VcsFactory;
+use Src\Platforms\PayloadFactory;
 
 $app->get('/', function() use ($app) {
     $pullRequests = $app['doctrine.odm.mongodb.dm']
@@ -15,21 +15,21 @@ $app->get('/', function() use ($app) {
 });
 
 $app->post('/{vcsName}/pullRequest', function(Request $httpRequest, $vcsName) use ($app) {
-    $vcs = VcsFactory::create($vcsName, $httpRequest);
-    if ($vcs->isCreatePullRequestAction()) {
-        $pullRequest = $vcs->createPullRequest();
+    $payload = PayloadFactory::create($vcsName, $httpRequest);
+    if ($payload->isCreatePullRequestAction()) {
+        $pullRequest = $payload->createPullRequest();
         $app['doctrine.odm.mongodb.dm']->persist($pullRequest);
         $app['doctrine.odm.mongodb.dm']->flush();
         return new Response('Created', 201);
     }
 
-    if ($vcs->isClosePullRequestAction()) {
+    if ($payload->isClosePullRequestAction()) {
         $pullRequest = $app['doctrine.odm.mongodb.dm']
             ->getRepository('Src\\Models\\PullRequest')
             ->findOneBy(
                 array(
-                    'id' => $vcs->getPullRequestIdFromPayload(),
-                    'vcs' => $vcs::VCSNAME
+                    'id' => $payload->getPullRequestIdFromPayload(),
+                    'vcs' => $payload::VCSNAME
                 )
             );
         if ($pullRequest) {
@@ -42,9 +42,9 @@ $app->post('/{vcsName}/pullRequest', function(Request $httpRequest, $vcsName) us
 });
 
 $app->post('/{vcsName}/pullRequestComment', function(Request $httpRequest, $vcsName) use ($app) {
-    $vcs = VcsFactory::create($vcsName, $httpRequest);
-    if ($vcs->isCreateCommentAction()) {
-        $pullRequest = $vcs->updateComments($pullRequest);
+    $payload = PayloadFactory::create($vcsName, $httpRequest);
+    if ($payload->isCreateCommentAction()) {
+        $pullRequest = $payload->updateComments($pullRequest);
         if ($pullRequest) {
             $app['doctrine.odm.mongodb.dm']->persist($pullRequest);
             $app['doctrine.odm.mongodb.dm']->flush();
@@ -53,3 +53,5 @@ $app->post('/{vcsName}/pullRequestComment', function(Request $httpRequest, $vcsN
         return new Response('Not found', 410);
     }
 });
+
+return new Response('Not found', 404);
