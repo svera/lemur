@@ -41,26 +41,26 @@
                       {% if pullRequest.vcs == 'gitlab' %}
                         <span class="fa fa-git" aria-hidden="true"></span>&nbsp;
                       {% endif %}
-                      <a href="{{ pullRequest.getHtmlUrl }}">{{ pullRequest.getName }}</a>
+                      <a href="{{ pullRequest.htmlUrl }}">{{ pullRequest.name }}</a>
                     </h4>
                     {% if pullRequest.vcs == 'github' %}
                       <div class="pull-right">
                         <span class="badge">
                           <span class="glyphicon glyphicon-comment" aria-hidden="true"></span>
-                          &nbsp;{{ pullRequest.getNumberComments }}
+                          &nbsp;{{ pullRequest.numberComments }}
                         </span>
                         <span class="badge alert-success">
                           <span class="glyphicon glyphicon-thumbs-up" aria-hidden="true"></span>
-                          &nbsp;{{ pullRequest.getNumberApprovals }}
+                          &nbsp;{{ pullRequest.numberApprovals }}
                         </span>
                         <span class="badge alert-danger">
                           <span class="glyphicon glyphicon-thumbs-down" aria-hidden="true"></span>
-                          &nbsp;{{ pullRequest.getNumberDisapprovals }}
+                          &nbsp;{{ pullRequest.numberDisapprovals }}
                         </span>
                       </div>
                     {% endif %}
                   </div>
-                  <p><em>Created by {{ pullRequest.getCreatedBy }} <time class="timeago" datetime="{{ pullRequest.getCreatedAt }}">{{ pullRequest.getCreatedAt }}</time></em></p>
+                  <p><em>Created by {{ pullRequest.createdBy }} <time class="timeago" datetime="{{ pullRequest.createdAt }}">{{ pullRequest.createdAt }}</time></em></p>
                 </li>
               {% endfor %}
             </ul>
