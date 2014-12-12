@@ -6,7 +6,7 @@ use Src\Platforms\Github;
 use Src\Platforms\Gitlab;
 use Symfony\Component\HttpFoundation\Request;
 
-class VcsFactory
+class PayloadFactory
 {
     public static function create($vcsName, Request $httpRequest)
     {

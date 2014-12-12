@@ -4,7 +4,7 @@ namespace Src\Platforms;
 
 use Symfony\Component\HttpFoundation\Request;
 
-abstract class Vcs
+abstract class Payload
 {
     /**
      * Decoded JSON payload, stored as an array

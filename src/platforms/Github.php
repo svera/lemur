@@ -5,7 +5,7 @@ namespace Src\Platforms;
 use Src\Models\PullRequest;
 use Symfony\Component\HttpFoundation\Request;
 
-class Github extends Vcs implements VcsInterface
+class Github extends Payload implements PayloadInterface
 {
     const VCSNAME = 'github';
 
@@ -24,17 +24,17 @@ class Github extends Vcs implements VcsInterface
         return $pullRequest;
     }
 
-    public function isCreatePullRequestAction()
+    public function isCreatePullRequestPayload()
     {
         return $this->payload['action'] == 'opened' || $this->payload['action'] == 'reopened';
     }
 
-    public function isClosePullRequestAction()
+    public function isClosePullRequestPayload()
     {
         return $this->payload['action'] == 'closed';
     }
 
-    public function isCommentCreatedAction()
+    public function isCommentCreatedPayload()
     {
         return $this->payload['action'] == 'created';
     }
