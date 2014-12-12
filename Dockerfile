@@ -7,3 +7,4 @@ RUN echo "extension=mongo.so\nextension=zip.so" > /usr/local/lib/php.ini
 ADD . /code
 WORKDIR /code
 RUN composer install
+RUN ln -s /code/vendor/phpunit/phpunit/phpunit /usr/local/bin/phpunit

@@ -36,6 +36,10 @@ on these platforms in order to receive the needed information from them.
 
 ### Github
 
+## Tests
+
+```fig run app phpunit --bootstrap vendor/autoload.php src/tests```
+
 ## Technical facts
 
 * Written in PHP 5.4 using [Silex]() microframework.

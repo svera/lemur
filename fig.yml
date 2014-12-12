@@ -5,7 +5,7 @@ app:
   command: php -S 0.0.0.0:8000 -t /code/web
   volumes:
   - ./web:/code/web
-  - ./src:/code/src 
+  - ./src:/code/src
   links:
    - mongo
 mongo:
