@@ -24,7 +24,14 @@ $app->post('/{vcsName}/pullRequest', function(Request $httpRequest, $vcsName) us
     }
 
     if ($vcs->isClosePullRequestAction()) {
-        $pullRequest = $vcs->loadPullRequest($app['doctrine.odm.mongodb.dm']);
+        $pullRequest = $app['doctrine.odm.mongodb.dm']
+            ->getRepository('Src\\Models\\PullRequest')
+            ->findOneBy(
+                array(
+                    'id' => $vcs->getPullRequestIdFromPayload(),
+                    'vcs' => $vcs::VCSNAME
+                )
+            );
         if ($pullRequest) {
             $app['doctrine.odm.mongodb.dm']->remove($pullRequest);
             $app['doctrine.odm.mongodb.dm']->flush();

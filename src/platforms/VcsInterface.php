@@ -45,4 +45,10 @@ interface VcsInterface
      * @return boolean
      */
     public function isCommentCreatedAction();
+
+    /**
+     * Returns pull request ID
+     * @return integer
+     */
+    public function getPullRequestIdFromPayload();
 }

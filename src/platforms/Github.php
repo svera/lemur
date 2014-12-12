@@ -51,19 +51,8 @@ class Github extends Vcs implements VcsInterface
         return $pullRequest;
     }
 
-    public function loadPullRequest($db)
+    public function getPullRequestIdFromPayload()
     {
-        $pullRequest = $db
-            ->getRepository('Src\\Models\\PullRequest')
-            ->findOneBy(
-                array(
-                    'id' => $this->payload['pull_request']['id'],
-                    'vcs' => self::VCSNAME
-                )
-            );
-        if ($pullRequest) {
-            return $pullRequest;
-        }
-        return false;
+        return $this->payload['pull_request']['id'];
     }
 }

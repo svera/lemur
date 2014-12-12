@@ -53,19 +53,8 @@ class Gitlab extends Vcs implements VcsInterface
         return false;
     }
 
-    public function loadPullRequest($db)
+    public function getPullRequestIdFromPayload()
     {
-        $pullRequest = $db
-            ->getRepository('Src\\Models\\PullRequest')
-            ->findOneBy(
-                array(
-                    'id' => $this->payload['object_attributes']['id'],
-                    'vcs' => self::VCSNAME
-                )
-            );
-        if ($pullRequest) {
-            return $pullRequest;
-        }
-        return false;
+        return $this->payload['object_attributes']['id'];
     }
 }
