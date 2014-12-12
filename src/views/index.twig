@@ -26,10 +26,10 @@
   <body>
     <div class="container">
       <div class="row">
-        <div class="col-md-12">
+        <div class="col-md-12" id="pull-requests">
           {% if pullRequests|length > 0 %}
             <h2>{{ pullRequests|length }} Pull requests pending merge</h2>
-            <ul class="list-group" id="pull-requests">
+            <ul class="list-group">
               {% for pullRequest in pullRequests %}
                 <li class="list-group-item">
                   <div class="clearfix">
@@ -75,7 +75,7 @@
       jQuery("time.timeago").timeago();
     });
     setInterval(function () {
-      $('#pull_requests').load(document.URL +  ' #pull_requests');
+      $('#pull-requests').load(document.URL +  ' #pull-requests');
     }, 10000);
   </script>
 </html>

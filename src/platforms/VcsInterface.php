@@ -1,8 +1,9 @@
 <?php
 
-namespace Src\Models;
+namespace Src\Platforms;
 
 use Symfony\Component\HttpFoundation\Request;
+use Src\Models\PullRequest;
 
 interface VcsInterface
 {

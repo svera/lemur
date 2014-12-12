@@ -1,6 +1,6 @@
 <?php
 
-namespace Src\Models;
+namespace Src\Platforms;
 
 use Src\Models\PullRequest;
 use Symfony\Component\HttpFoundation\Request;

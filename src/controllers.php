@@ -3,7 +3,7 @@
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Src\Models\PullRequest;
-use Src\Models\VcsFactory;
+use Src\Platforms\VcsFactory;
 
 $app->get('/', function() use ($app) {
     $pullRequests = $app['doctrine.odm.mongodb.dm']

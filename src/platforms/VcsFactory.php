@@ -1,9 +1,9 @@
 <?php
 
-namespace Src\Models;
+namespace Src\Platforms;
 
-use Src\Models\Github;
-use Src\Models\Gitlab;
+use Src\Platforms\Github;
+use Src\Platforms\Gitlab;
 use Symfony\Component\HttpFoundation\Request;
 
 class VcsFactory

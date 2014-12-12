@@ -6,6 +6,9 @@
         "neutron/mongo-odm-silex-provider": "*"
     },
     "autoload": {
-        "psr-4": { "Src\\Models\\": "src/models/" }
+        "psr-4": { 
+            "Src\\Models\\": "src/models/",
+            "Src\\Platforms\\": "src/platforms/"
+        }
     }
 }
