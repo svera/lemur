@@ -1,7 +1,14 @@
 <?php
 
-class ControllersTest extends PHPUnit_Framework_TestCase
+use Silex\WebTestCase;
+
+class ControllersTest extends WebTestCase
 {
+    public function createApplication()
+    {
+        return require __DIR__.'/../app.php';
+    }
+
     public function testInitialPage()
     {
         $client = $this->createClient();
