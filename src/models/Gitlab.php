@@ -31,11 +31,23 @@ class Gitlab extends Vcs implements VcsInterface
         return $this->payload['object_attributes']['state'] == 'closed';
     }
 
+    /**
+     * Gitlab doesn't provide any comment info in webhooks right now,
+     * so this method just returns false
+     * @param  PullRequest $pullRequest
+     * @return bool
+     */
     public function isCommentCreatedAction()
     {
         return false;
     }
 
+    /**
+     * Gitlab doesn't provide any comment info in webhooks right now,
+     * so this method just returns false
+     * @param  PullRequest $pullRequest
+     * @return bool
+     */
     public function updateComments(PullRequest $pullRequest)
     {
         return false;

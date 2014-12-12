@@ -48,7 +48,7 @@ class Github extends Vcs implements VcsInterface
         if (strpos($this->payload['comment']['body'], '-1') !== false) {
             $pullRequest->setNumberApprovals($pullRequest->getNumberDisapprovals() + 1);
         }
-        return $PullRequest;
+        return $pullRequest;
     }
 
     public function loadPullRequest($db)
