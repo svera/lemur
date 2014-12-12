@@ -12,12 +12,12 @@ class Gitlab extends Vcs implements VcsInterface
     public function createPullRequest()
     {
         $pullRequest = new PullRequest();
-        $pullRequest->setId($this->payload['object_attributes']['id']);
-        $pullRequest->setName($this->payload['object_attributes']['title']);
-        $pullRequest->setCreatedBy($this->payload['user']['name']);
-        $pullRequest->setCreatedAt($this->payload['object_attributes']['created_at']);
-        $pullRequest->setVcs(self::VCSNAME);
-        $pullRequest->setHtmlUrl($this->payload['object_attributes']['source']['http_url']);
+        $pullRequest->id = $this->payload['object_attributes']['id'];
+        $pullRequest->name = $this->payload['object_attributes']['title'];
+        $pullRequest->createdBy = $this->payload['user']['name'];
+        $pullRequest->createdAt = $this->payload['object_attributes']['created_at'];
+        $pullRequest->vcs = self::VCSNAME;
+        $pullRequest->htmlUrl = $this->payload['object_attributes']['source']['http_url'];
         return $pullRequest;
     }
 

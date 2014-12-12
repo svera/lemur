@@ -12,15 +12,15 @@ class Github extends Vcs implements VcsInterface
     public function createPullRequest()
     {
         $pullRequest = new PullRequest();
-        $pullRequest->setId($this->payload['pull_request']['id']);
-        $pullRequest->setName($this->payload['pull_request']['title']);
-        $pullRequest->setCreatedBy($this->payload['pull_request']['user']['login']);
-        $pullRequest->setCreatedAt($this->payload['pull_request']['created_at']);
-        $pullRequest->setNumberComments(0);
-        $pullRequest->setNumberApprovals(0);
-        $pullRequest->setNumberDisapprovals(0);
-        $pullRequest->setVcs(self::VCSNAME);
-        $pullRequest->setHtmlUrl($this->payload['pull_request']['html_url']);
+        $pullRequest->id = $this->payload['pull_request']['id'];
+        $pullRequest->name = $this->payload['pull_request']['title'];
+        $pullRequest->createdBy = $this->payload['pull_request']['user']['login'];
+        $pullRequest->createdAt = $this->payload['pull_request']['created_at'];
+        $pullRequest->numberComments = 0;
+        $pullRequest->numberApprovals = 0;
+        $pullRequest->numberDisapprovals = 0;
+        $pullRequest->vcs = self::VCSNAME;
+        $pullRequest->htmlUrl = $this->payload['pull_request']['html_url'];
         return $pullRequest;
     }
 
@@ -41,12 +41,12 @@ class Github extends Vcs implements VcsInterface
 
     public function updateComments(PullRequest $pullRequest)
     {
-        $pullRequest->setNumberComments($pullRequest->getNumberComments() + 1);
+        $pullRequest->setNumberComments($pullRequest->numberComments++);
         if (strpos($this->payload['comment']['body'], '+1') !== false) {
-            $pullRequest->setNumberApprovals($pullRequest->getNumberApprovals() + 1);
+            $pullRequest->setNumberApprovals($pullRequest->numberApprovals++);
         }
         if (strpos($this->payload['comment']['body'], '-1') !== false) {
-            $pullRequest->setNumberApprovals($pullRequest->getNumberDisapprovals() + 1);
+            $pullRequest->setNumberApprovals($pullRequest->numberDisapprovals++);
         }
         return $pullRequest;
     }

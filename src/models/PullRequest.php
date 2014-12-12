@@ -8,126 +8,29 @@ use Doctrine\ODM\MongoDB\Mapping\Annotations as ODM;
 class PullRequest
 {
     /** @ODM\Id(strategy="NONE") */
-    private $id;
+    public $id;
 
     /** @ODM\String */
-    private $name;
+    public $name;
 
     /** @ODM\Int */
-    private $numberComments;
+    public $numberComments;
 
     /** @ODM\Int */
-    private $numberApprovals;
+    public $numberApprovals;
 
     /** @ODM\Int */
-    private $numberDisapprovals;
+    public $numberDisapprovals;
 
     /** @ODM\String */
-    private $createdBy;
+    public $createdBy;
 
     /** @ODM\String */
-    private $createdAt;
+    public $createdAt;
 
     /** @ODM\String */
-    private $vcs;
+    public $vcs;
 
     /** @ODM\String */
-    private $htmlUrl;
-
-    public function __construct()
-    {
-        $this->numberComments = 0;
-        $this->numberApprovals = 0;
-        $this->numberDisapprovals = 0;
-    }
-
-    public function setId($id)
-    {
-        $this->id = $id;
-    }
-
-    public function getId()
-    {
-        return $this->id;
-    }
-
-    public function setName($name)
-    {
-        $this->name = $name;
-    }
-
-    public function getName()
-    {
-        return $this->name;
-    }
-
-    public function setNumberComments($number)
-    {
-        $this->numberComments = $number;
-    }
-
-    public function getNumberComments()
-    {
-        return $this->numberComments;
-    }
-
-    public function setNumberApprovals($number)
-    {
-        $this->numberApprovals = $number;
-    }
-
-    public function getNumberApprovals()
-    {
-        return $this->numberApprovals;
-    }
-
-    public function setNumberDisapprovals($number)
-    {
-        $this->numberDisapprovals = $number;
-    }
-
-    public function getNumberDisapprovals()
-    {
-        return $this->numberDisapprovals;
-    }
-
-    public function setCreatedBy($name)
-    {
-        $this->createdBy = $name;
-    }
-
-    public function getCreatedBy()
-    {
-        return $this->createdBy;
-    }
-
-    public function setCreatedAt($dateTime)
-    {
-        $this->createdAt = $dateTime;
-    }
-
-    public function getCreatedAt()
-    {
-        return $this->createdAt;
-    }
-
-    public function setVcs($name)
-    {
-        $this->vcs = $name;
-    }
-
-    public function getVcs()
-    {
-        return $this->vcs;
-    }
-
-    public function setHtmlUrl($url)
-    {
-        $this->htmlUrl = $url;
-    }
-
-    public function getHtmlUrl()
-    {
-        return $this->htmlUrl;
-    }
+    public $htmlUrl;
 }
