@@ -1,5 +1,4 @@
 <?php
-require_once __DIR__.'/../vendor/autoload.php';
 
 use Neutron\Silex\Provider\MongoDBODMServiceProvider;
 use Symfony\Component\HttpFoundation\Request;
@@ -28,6 +27,12 @@ $app->register(new Silex\Provider\TwigServiceProvider(), array(
     'twig.path' => __DIR__.'/views',
 ));
 $app['debug'] = true;
+
+if (isset($app_env) && in_array($app_env, array('prod','dev','test'))) {
+    $app['env'] = $app_env;
+} else {
+    $app['env'] = 'prod';
+}
 
 /**
  * This application middleware is triggered before the controller is executed

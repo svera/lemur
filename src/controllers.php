@@ -54,4 +54,4 @@ $app->post('/{vcsName}/pullRequestComment', function(Request $httpRequest, $vcsN
     }
 });
 
-return new Response('Not found', 404);
+//return new Response('Not found', 404);

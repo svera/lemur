@@ -6,14 +6,17 @@ class ControllersTest extends WebTestCase
 {
     public function createApplication()
     {
-        return require __DIR__.'/../app.php';
+        $app_env = 'test';
+        $app = require __DIR__.'/../../web/index.php';
+        //$app['debug'] = true;
+        //$app['exception_handler']->disable();
+        return $app;
     }
 
     public function testInitialPage()
     {
         $client = $this->createClient();
         $crawler = $client->request('GET', '/');
-
-         $this->assertTrue($client->getResponse()->isOk());
+        $this->assertTrue($client->getResponse()->isOk());
     }
 }

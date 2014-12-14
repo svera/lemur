@@ -1,6 +1,7 @@
 {
     "require": {
         "silex/silex": "~1.2",
+        "symfony/browser-kit": "*",
         "twig/twig": "*",
         "phpunit/phpunit": "4.4.*",
         "doctrine/mongodb-odm": "@beta",
