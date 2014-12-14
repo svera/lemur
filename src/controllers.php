@@ -44,6 +44,14 @@ $app->post('/{vcsName}/pullRequest', function(Request $httpRequest, $vcsName) us
 $app->post('/{vcsName}/pullRequestComment', function(Request $httpRequest, $vcsName) use ($app) {
     $payload = PayloadFactory::create($vcsName, $httpRequest);
     if ($payload->isCreateCommentPayload()) {
+        $pullRequest = $app['doctrine.odm.mongodb.dm']
+            ->getRepository('Src\\Models\\PullRequest')
+            ->findOneBy(
+                array(
+                    'id' => $payload->getPullRequestIdFromPayload(),
+                    'vcs' => $payload::VCSNAME
+                )
+            );
         $pullRequest = $payload->updateComments($pullRequest);
         if ($pullRequest) {
             $app['doctrine.odm.mongodb.dm']->persist($pullRequest);
@@ -53,5 +61,3 @@ $app->post('/{vcsName}/pullRequestComment', function(Request $httpRequest, $vcsN
         return new Response('Not found', 410);
     }
 });
-
-//return new Response('Not found', 404);

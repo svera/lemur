@@ -21,12 +21,12 @@ class Gitlab extends Payload implements PayloadInterface
         return $pullRequest;
     }
 
-    public function isCreatePullRequestAction()
+    public function isCreatePullRequestPayload()
     {
         return $this->payload['object_attributes']['state'] == 'opened';
     }
 
-    public function isClosePullRequestAction()
+    public function isClosePullRequestPayload()
     {
         return $this->payload['object_attributes']['state'] == 'closed';
     }
@@ -37,7 +37,7 @@ class Gitlab extends Payload implements PayloadInterface
      * @param  PullRequest $pullRequest
      * @return bool
      */
-    public function isCommentCreatedAction()
+    public function isCreateCommentPayload()
     {
         return false;
     }

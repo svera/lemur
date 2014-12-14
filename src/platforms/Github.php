@@ -34,19 +34,19 @@ class Github extends Payload implements PayloadInterface
         return $this->payload['action'] == 'closed';
     }
 
-    public function isCommentCreatedPayload()
+    public function isCreateCommentPayload()
     {
         return $this->payload['action'] == 'created';
     }
 
     public function updateComments(PullRequest $pullRequest)
     {
-        $pullRequest->setNumberComments($pullRequest->numberComments++);
+        $pullRequest->numberComments = $pullRequest->numberComments++;
         if (strpos($this->payload['comment']['body'], '+1') !== false) {
-            $pullRequest->setNumberApprovals($pullRequest->numberApprovals++);
+            $pullRequest->numberApprovals = $pullRequest->numberApprovals++;
         }
         if (strpos($this->payload['comment']['body'], '-1') !== false) {
-            $pullRequest->setNumberApprovals($pullRequest->numberDisapprovals++);
+            $pullRequest->numberDisapprovals = $pullRequest->numberDisapprovals++;
         }
         return $pullRequest;
     }

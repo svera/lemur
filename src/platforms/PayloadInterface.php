@@ -38,7 +38,7 @@ interface PayloadInterface
      * comment in a PR, false otherwise
      * @return boolean
      */
-    public function isCommentCreatedPayload();
+    public function isCreateCommentPayload();
 
     /**
      * Returns pull request ID

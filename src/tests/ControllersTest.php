@@ -27,7 +27,7 @@ class ControllersTest extends WebTestCase
         $this->assertTrue($client->getResponse()->isNotFound());
     }
 
-    public function testCreateNewGithubPullRequest()
+    public function testNewAndUpdateGithubPullRequest()
     {
         $client = $this->createClient();
         $client->request(
@@ -42,5 +42,29 @@ class ControllersTest extends WebTestCase
             Response::HTTP_CREATED,
             $client->getResponse()->getStatusCode()
         );
+        $client->request(
+            'POST',
+            '/github/pullRequestComment',
+            array(),
+            array(),
+            array('CONTENT_TYPE' => 'application/json'),
+            file_get_contents(__DIR__.'/fixtures/githubNewPullRequestCommentPayload.json')
+        );
+        $this->assertTrue($client->getResponse()->isOk());
     }
+
+    public function testCloseGithubPullRequest()
+    {
+        $client = $this->createClient();
+        $client->request(
+            'POST',
+            '/github/pullRequest',
+            array(),
+            array(),
+            array('CONTENT_TYPE' => 'application/json'),
+            file_get_contents(__DIR__.'/fixtures/githubClosePullRequestPayload.json')
+        );
+        $this->assertTrue($client->getResponse()->isOk());
+    }
+
 }
