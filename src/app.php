@@ -5,9 +5,10 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\ParameterBag;
 
 $app = new Silex\Application();
+$app['config.db.name'] = 'lemur';
 $app->register(new MongoDBODMServiceProvider(), array(
     'doctrine.odm.mongodb.connection_options' => array(
-        'database' => 'MONGODB_DB',
+        'database' => $app['config.db.name'],
         'host'     => 'mongo',
         'options'  => array('fsync' => false)
     ),

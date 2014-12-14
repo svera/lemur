@@ -16,14 +16,14 @@ $app->get('/', function() use ($app) {
 
 $app->post('/{vcsName}/pullRequest', function(Request $httpRequest, $vcsName) use ($app) {
     $payload = PayloadFactory::create($vcsName, $httpRequest);
-    if ($payload->isCreatePullRequestAction()) {
+    if ($payload->isCreatePullRequestPayload()) {
         $pullRequest = $payload->createPullRequest();
         $app['doctrine.odm.mongodb.dm']->persist($pullRequest);
         $app['doctrine.odm.mongodb.dm']->flush();
         return new Response('Created', 201);
     }
 
-    if ($payload->isClosePullRequestAction()) {
+    if ($payload->isClosePullRequestPayload()) {
         $pullRequest = $app['doctrine.odm.mongodb.dm']
             ->getRepository('Src\\Models\\PullRequest')
             ->findOneBy(
@@ -43,7 +43,7 @@ $app->post('/{vcsName}/pullRequest', function(Request $httpRequest, $vcsName) us
 
 $app->post('/{vcsName}/pullRequestComment', function(Request $httpRequest, $vcsName) use ($app) {
     $payload = PayloadFactory::create($vcsName, $httpRequest);
-    if ($payload->isCreateCommentAction()) {
+    if ($payload->isCreateCommentPayload()) {
         $pullRequest = $payload->updateComments($pullRequest);
         if ($pullRequest) {
             $app['doctrine.odm.mongodb.dm']->persist($pullRequest);
