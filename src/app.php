@@ -5,7 +5,15 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\ParameterBag;
 
 $app = new Silex\Application();
-$app['config.db.name'] = 'lemur';
+
+if (getenv('LEMUR_ENV') == 'devel') {
+    require __DIR__.'/config/devel.php';
+} else if (getenv('LEMUR_ENV') == 'test') {
+    require __DIR__.'/config/test.php';
+} else {
+    require __DIR__.'/config/prod.php';
+}
+
 $app->register(new MongoDBODMServiceProvider(), array(
     'doctrine.odm.mongodb.connection_options' => array(
         'database' => $app['config.db.name'],
@@ -27,13 +35,6 @@ $app->register(new MongoDBODMServiceProvider(), array(
 $app->register(new Silex\Provider\TwigServiceProvider(), array(
     'twig.path' => __DIR__.'/views',
 ));
-$app['debug'] = true;
-
-if (isset($app_env) && in_array($app_env, array('prod','dev','test'))) {
-    $app['env'] = $app_env;
-} else {
-    $app['env'] = 'prod';
-}
 
 /**
  * This application middleware is triggered before the controller is executed

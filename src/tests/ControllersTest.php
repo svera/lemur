@@ -7,10 +7,8 @@ class ControllersTest extends WebTestCase
 {
     public function createApplication()
     {
-        $app_env = 'test';
-        $app = require __DIR__.'/../../web/index.php';
-        $app['config.db.name'] = 'test';
-        return $app;
+        putenv('LEMUR_ENV=test');
+        return require __DIR__.'/../../web/index.php';
     }
 
     public function testInitialPage()
