@@ -11,10 +11,10 @@ class PayloadFactory
     public static function create($vcsName, Request $httpRequest)
     {
         if ($vcsName == 'github') {
-            return new Github($httpRequest);
+            return new GithubPayload($httpRequest);
         }
         if ($vcsName == 'gitlab') {
-            return new Gitlab($httpRequest);
+            return new GitlabPayload($httpRequest);
         }
     }
 }

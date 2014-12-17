@@ -5,7 +5,7 @@ namespace Src\Platforms;
 use Src\Models\PullRequest;
 use Symfony\Component\HttpFoundation\Request;
 
-class Gitlab extends Payload implements PayloadInterface
+class GitlabPayload extends Payload implements PayloadInterface
 {
     const VCSNAME = 'gitlab';
 

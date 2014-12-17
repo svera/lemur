@@ -3,7 +3,7 @@
 use Silex\WebTestCase;
 use Symfony\Component\HttpFoundation\Response;
 
-class ControllersTest extends WebTestCase
+class ControllersGithubTest extends WebTestCase
 {
     public function createApplication()
     {

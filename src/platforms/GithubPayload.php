@@ -5,7 +5,7 @@ namespace Src\Platforms;
 use Src\Models\PullRequest;
 use Symfony\Component\HttpFoundation\Request;
 
-class Github extends Payload implements PayloadInterface
+class GithubPayload extends Payload implements PayloadInterface
 {
     const VCSNAME = 'github';
 
