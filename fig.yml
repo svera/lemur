@@ -1,11 +1,10 @@
 app:
   build: .
   ports:
-   - "8000:8000"
-  command: php -S 0.0.0.0:8000 -t /code/web
+   - "80:80"
   volumes:
-  - ./web:/code/web
-  - ./src:/code/src
+  - ./app/web:/var/www/lemur/web
+  - ./app/src:/var/www/lemur/src
   links:
    - mongo
 mongo:
