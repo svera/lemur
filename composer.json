@@ -1,17 +1,17 @@
 {
     "require": {
         "silex/silex": "~1.2",
-        "twig/twig": "*",
+        "twig/twig": "1.16.*",
         "doctrine/mongodb-odm": "@beta",
-        "neutron/mongo-odm-silex-provider": "*"
+        "neutron/mongo-odm-silex-provider": "0.1.*"
     },
     "require-dev": {
-        "symfony/browser-kit": "*",
+        "symfony/browser-kit": "2.6.*",
         "phpunit/phpunit": "4.4.*"
     },
     "autoload": {
         "psr-4": { 
-            "Src\\Models\\": "src/models/",
+            "Src\\Entities\\": "src/entities/",
             "Src\\Platforms\\": "src/platforms/"
         }
     }

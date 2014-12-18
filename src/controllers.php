@@ -2,12 +2,12 @@
 
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Src\Models\PullRequest;
+use Src\Entities\PullRequest;
 use Src\Platforms\PayloadFactory;
 
 $app->get('/', function() use ($app) {
     $pullRequests = $app['doctrine.odm.mongodb.dm']
-    ->getRepository('Src\\Models\\PullRequest')
+    ->getRepository('Src\\Entities\\PullRequest')
     ->findAll();
     return $app['twig']->render('index.twig', array(
         'pullRequests' => $pullRequests
@@ -25,7 +25,7 @@ $app->post('/{vcsName}/pullRequest', function(Request $httpRequest, $vcsName) us
 
     if ($payload->isClosePullRequestPayload()) {
         $pullRequest = $app['doctrine.odm.mongodb.dm']
-            ->getRepository('Src\\Models\\PullRequest')
+            ->getRepository('Src\\Entities\\PullRequest')
             ->findOneBy(
                 array(
                     'id' => $payload->getPullRequestIdFromPayload(),
@@ -45,7 +45,7 @@ $app->post('/{vcsName}/pullRequestComment', function(Request $httpRequest, $vcsN
     $payload = PayloadFactory::create($vcsName, $httpRequest);
     if ($payload->isCreateCommentPayload()) {
         $pullRequest = $app['doctrine.odm.mongodb.dm']
-            ->getRepository('Src\\Models\\PullRequest')
+            ->getRepository('Src\\Entities\\PullRequest')
             ->findOneBy(
                 array(
                     'id' => $payload->getPullRequestIdFromPayload(),

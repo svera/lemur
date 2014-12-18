@@ -3,7 +3,7 @@
 namespace Src\Platforms;
 
 use Symfony\Component\HttpFoundation\Request;
-use Src\Models\PullRequest;
+use Src\Entities\PullRequest;
 
 interface PayloadInterface
 {

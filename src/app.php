@@ -8,7 +8,7 @@ $app = new Silex\Application();
 
 if (getenv('LEMUR_ENV') == 'devel') {
     require __DIR__.'/config/devel.php';
-} else if (getenv('LEMUR_ENV') == 'test') {
+} elseif (getenv('LEMUR_ENV') == 'test') {
     require __DIR__.'/config/test.php';
 } else {
     require __DIR__.'/config/prod.php';
@@ -26,7 +26,7 @@ $app->register(new MongoDBODMServiceProvider(), array(
             'path' => array(
                 'src/models',
             ),
-            'namespace' => 'Src\Models'
+            'namespace' => 'Src\Entities'
         ),
     ),
     'doctrine.odm.mongodb.proxies_dir' => '../var/cache/doctrine/odm/mongodb/Proxy',

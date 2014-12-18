@@ -2,7 +2,7 @@
 
 namespace Src\Platforms;
 
-use Src\Models\PullRequest;
+use Src\Entities\PullRequest;
 use Symfony\Component\HttpFoundation\Request;
 
 class GitlabPayload extends Payload implements PayloadInterface
