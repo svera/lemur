@@ -45,4 +45,9 @@ interface PayloadInterface
      * @return integer
      */
     public function getPullRequestIdFromPayload();
+
+    /**
+     * Marks a pull request as closed
+     */
+    public function setClosed(PullRequest $pullRequest);
 }

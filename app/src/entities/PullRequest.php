@@ -29,6 +29,12 @@ class PullRequest
     public $createdAt;
 
     /** @ODM\String */
+    public $updatedAt;
+
+    /** @ODM\String */
+    public $status;
+
+    /** @ODM\String */
     public $vcs;
 
     /** @ODM\String */

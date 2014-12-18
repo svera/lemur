@@ -9,7 +9,7 @@
     "patch_url": "https://github.com/baxterthehacker/public-repo/pull/50.patch",
     "issue_url": "https://api.github.com/repos/baxterthehacker/public-repo/issues/50",
     "number": 50,
-    "state": "open",
+    "state": "closed",
     "locked": false,
     "title": "Update the README with new information",
     "user": {
@@ -34,7 +34,7 @@
     "body": "This is a pretty simple change that we need to pull into master.",
     "created_at": "2014-10-10T00:09:50Z",
     "updated_at": "2014-10-10T00:09:50Z",
-    "closed_at": null,
+    "closed_at": "2014-10-10T00:09:50Z",
     "merged_at": null,
     "merge_commit_sha": "cd3ff078a350901f91f4c4036be74f91d0b0d5d5",
     "assignee": null,

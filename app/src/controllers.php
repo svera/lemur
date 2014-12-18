@@ -8,9 +8,14 @@ use Src\Platforms\PayloadFactory;
 $app->get('/', function() use ($app) {
     $pullRequests = $app['doctrine.odm.mongodb.dm']
     ->getRepository('Src\\Entities\\PullRequest')
-    ->findAll();
+    ->findAll(
+        array(
+            'status' => 'open'
+        )
+    );
     return $app['twig']->render('index.twig', array(
-        'pullRequests' => $pullRequests
+        'pullRequests' => $pullRequests,
+        'refreshTime'  => $app['config.refreshTime']
     ));
 });
 
@@ -20,7 +25,7 @@ $app->post('/{vcsName}/pullRequest', function(Request $httpRequest, $vcsName) us
         $pullRequest = $payload->createPullRequest();
         $app['doctrine.odm.mongodb.dm']->persist($pullRequest);
         $app['doctrine.odm.mongodb.dm']->flush();
-        return new Response('Created', 201);
+        return new Response('Pull request reated', 201);
     }
 
     if ($payload->isClosePullRequestPayload()) {
@@ -33,11 +38,12 @@ $app->post('/{vcsName}/pullRequest', function(Request $httpRequest, $vcsName) us
                 )
             );
         if ($pullRequest) {
-            $app['doctrine.odm.mongodb.dm']->remove($pullRequest);
+            $pullRequest->setClosed($PullRequest);
+            $app['doctrine.odm.mongodb.dm']->persist($pullRequest);
             $app['doctrine.odm.mongodb.dm']->flush();
-            return new Response('Removed', 200);
+            return new Response('Pull request closed', 200);
         }
-        return new Response('Not found', 410);
+        return new Response('Pull request not found', 410);
     }
 });
 
@@ -56,8 +62,8 @@ $app->post('/{vcsName}/pullRequestComment', function(Request $httpRequest, $vcsN
         if ($pullRequest) {
             $app['doctrine.odm.mongodb.dm']->persist($pullRequest);
             $app['doctrine.odm.mongodb.dm']->flush();
-            return new Response('Updated', 200);
+            return new Response('Pull request updated', 200);
         }
-        return new Response('Not found', 410);
+        return new Response('Pull request not found', 410);
     }
 });

@@ -57,4 +57,11 @@ class GitlabPayload extends Payload implements PayloadInterface
     {
         return $this->payload['object_attributes']['id'];
     }
+
+    public function setClosed(PullRequest $pullRequest)
+    {
+        $pullRequest->status = 'closed';
+        $pullRequest->updatedAt = $this->payload['updated_at'];
+        return $pullRequest;
+    }
 }
