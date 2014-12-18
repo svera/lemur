@@ -1,0 +1,8 @@
+app:
+  build: .
+  ports:
+   - "80:80"
+  links:
+   - mongo
+mongo:
+  image: mongo:2.6
