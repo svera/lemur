@@ -9,6 +9,6 @@ RUN echo "extension=mongo.so\nextension=zip.so" >> /usr/local/etc/php/php.ini
 RUN mkdir /var/www/lemur
 ADD app /var/www/lemur
 COPY apache2.conf /etc/apache2/apache2.conf
-COPY htaccess /var/www/lemur/web
+COPY htaccess /var/www/lemur/web/.htaccess
 WORKDIR /var/www/lemur
 RUN composer install --no-dev
