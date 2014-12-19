@@ -45,6 +45,7 @@ $app->post('/{vcsName}/pullRequest', function(Request $httpRequest, $vcsName) us
         }
         return new Response('Pull request not found', 410);
     }
+    return new Response('Payload error', 400);
 });
 
 $app->post('/{vcsName}/pullRequestComment', function(Request $httpRequest, $vcsName) use ($app) {
@@ -66,4 +67,5 @@ $app->post('/{vcsName}/pullRequestComment', function(Request $httpRequest, $vcsN
         }
         return new Response('Pull request not found', 410);
     }
+    return new Response('Payload error', 400);
 });
