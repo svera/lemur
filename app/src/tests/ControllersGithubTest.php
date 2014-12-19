@@ -14,15 +14,32 @@ class ControllersGithubTest extends WebTestCase
     public function testInitialPage()
     {
         $client = $this->createClient();
-        $crawler = $client->request('GET', '/');
+        $client->request('GET', '/');
         $this->assertTrue($client->getResponse()->isOk());
     }
 
     public function testNonExistentUrl()
     {
         $client = $this->createClient();
-        $crawler = $client->request('GET', '/nonexistent');
+        $client->request('GET', '/nonexistent');
         $this->assertTrue($client->getResponse()->isNotFound());
+    }
+
+    public function testNoPayloadOrWrongPayloadSent()
+    {
+        $client = $this->createClient();
+        $client->request(
+            'POST',
+            '/github/pullRequest',
+            array(),
+            array(),
+            array('CONTENT_TYPE' => 'application/json'),
+            ''
+        );
+        $this->assertEquals(
+            Response::HTTP_BAD_REQUEST,
+            $client->getResponse()->getStatusCode()
+        );
     }
 
     public function testNewAndUpdateGithubPullRequest()

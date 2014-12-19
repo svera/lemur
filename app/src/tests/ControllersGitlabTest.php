@@ -25,6 +25,23 @@ class ControllersGitlabTest extends WebTestCase
         $this->assertTrue($client->getResponse()->isNotFound());
     }
 
+    public function testNoPayloadOrWrongPayloadSent()
+    {
+        $client = $this->createClient();
+        $client->request(
+            'POST',
+            '/gitlab/pullRequest',
+            array(),
+            array(),
+            array('CONTENT_TYPE' => 'application/json'),
+            ''
+        );
+        $this->assertEquals(
+            Response::HTTP_BAD_REQUEST,
+            $client->getResponse()->getStatusCode()
+        );
+    }
+
     public function testNewAndUpdateGitlabMergeRequest()
     {
         $client = $this->createClient();
