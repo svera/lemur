@@ -7,6 +7,8 @@ RUN pecl install mongo
 RUN pecl install zip
 RUN echo "extension=mongo.so\nextension=zip.so" >> /usr/local/etc/php/php.ini
 RUN mkdir /var/www/lemur
+RUN mkdir -p -m 777 /var/cache/doctrine/odm/mongodb/Proxy
+RUN mkdir -p -m 777 /var/cache/doctrine/odm/mongodb/Hydrator
 ADD app /var/www/lemur
 COPY apache2.conf /etc/apache2/apache2.conf
 WORKDIR /var/www/lemur
