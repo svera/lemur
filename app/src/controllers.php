@@ -25,7 +25,7 @@ $app->post('/{vcsName}/pullRequest', function(Request $httpRequest, $vcsName) us
         $pullRequest = $payload->createPullRequest();
         $app['doctrine.odm.mongodb.dm']->persist($pullRequest);
         $app['doctrine.odm.mongodb.dm']->flush();
-        return new Response('Pull request reated', 201);
+        return new Response('Pull request created', 201);
     }
 
     if ($payload->isClosePullRequestPayload()) {
