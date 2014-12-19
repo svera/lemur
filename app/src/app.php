@@ -29,8 +29,8 @@ $app->register(new MongoDBODMServiceProvider(), array(
             'namespace' => 'Src\Entities'
         ),
     ),
-    'doctrine.odm.mongodb.proxies_dir' => '../var/cache/doctrine/odm/mongodb/Proxy',
-    'doctrine.odm.mongodb.hydrators_dir' => '../var/cache/doctrine/odm/mongodb/Hydrator',
+    'doctrine.odm.mongodb.proxies_dir' => '/var/cache/doctrine/odm/mongodb/Proxy',
+    'doctrine.odm.mongodb.hydrators_dir' => '/var/cache/doctrine/odm/mongodb/Hydrator',
 ));
 $app->register(new Silex\Provider\TwigServiceProvider(), array(
     'twig.path' => __DIR__.'/views',
