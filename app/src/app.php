@@ -49,8 +49,8 @@ $app->register(new Silex\Provider\TwigServiceProvider(), array(
  * OAuth2
  */
 $app['oauth2'] = new League\OAuth2\Client\Provider\Github(array(
-    'clientId'     =>  'cc5f1886d5f637eeac33',
-    'clientSecret' =>  'b2a25b678a4119551ab307c3af732804308f1359',
+    'clientId'     =>  $_ENV['GITHUB_CLIENT_ID'],
+    'clientSecret' =>  $_ENV['GITHUB_CLIENT_SECRET'],
     //'redirectUri'  =>  '/auth/github/callback',
     'scopes' => array('read:org'),
     'domain' => 'https://github.corp.ebay.com'
