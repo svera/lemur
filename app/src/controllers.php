@@ -5,7 +5,16 @@ use Symfony\Component\HttpFoundation\Response;
 use Src\Entities\PullRequest;
 use Src\Platforms\PayloadFactory;
 
+$app->get('/login', function() use ($app) {
+    return $app['twig']->render('login.twig', array(
+        'loginPath' => $app['oauth2']->getAuthorizationUrl()
+    ));
+});
+
 $app->get('/', function() use ($app) {
+    if ($app['session']->get('access_token') === null) {
+        $app->redirect('/login');
+    }
     $pullRequests = $app['doctrine.odm.mongodb.dm']
     ->getRepository('Src\\Entities\\PullRequest')
     ->findAll(
@@ -17,6 +26,14 @@ $app->get('/', function() use ($app) {
         'pullRequests' => $pullRequests,
         'refreshTime'  => $app['config.refreshTime']
     ));
+});
+
+$app->get('/auth/github/callback', function(Request $httpRequest) use ($app) {
+    $token = $app['oauth2']->getAccessToken('authorization_code', [
+        'code' => $httpRequest->query->get('code')
+    ]);
+    $app['session']->set('access_token', $app['oauth2']->getUserDetails($token));
+    return $app->redirect('/');
 });
 
 $app->post('/{vcsName}/pullRequest', function(Request $httpRequest, $vcsName) use ($app) {

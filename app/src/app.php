@@ -32,8 +32,27 @@ $app->register(new MongoDBODMServiceProvider(), array(
     'doctrine.odm.mongodb.proxies_dir' => '/var/cache/doctrine/odm/mongodb/Proxy',
     'doctrine.odm.mongodb.hydrators_dir' => '/var/cache/doctrine/odm/mongodb/Hydrator',
 ));
+
+/**
+ * Sessions provider
+ */
+$app->register(new Silex\Provider\SessionServiceProvider());
+
+/**
+ * Twig views provider
+ */
 $app->register(new Silex\Provider\TwigServiceProvider(), array(
     'twig.path' => __DIR__.'/views',
+));
+
+/**
+ * OAuth2
+ */
+$app['oauth2'] = new League\OAuth2\Client\Provider\Github(array(
+    'clientId'     =>  'cc5f1886d5f637eeac33',
+    'clientSecret' =>  'b2a25b678a4119551ab307c3af732804308f1359',
+    //'redirectUri'  =>  '/auth/github/callback',
+    'scopes' => array('read:org'),
 ));
 
 /**
