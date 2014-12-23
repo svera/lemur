@@ -53,6 +53,7 @@ $app['oauth2'] = new League\OAuth2\Client\Provider\Github(array(
     'clientSecret' =>  'b2a25b678a4119551ab307c3af732804308f1359',
     //'redirectUri'  =>  '/auth/github/callback',
     'scopes' => array('read:org'),
+    'domain' => 'https://github.corp.ebay.com'
 ));
 
 /**
