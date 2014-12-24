@@ -24,7 +24,7 @@ $app->register(new MongoDBODMServiceProvider(), array(
         0 => array(
             'type' => 'annotation',
             'path' => array(
-                'src/models',
+                'src/entities',
             ),
             'namespace' => 'Src\Entities'
         ),
@@ -51,8 +51,7 @@ $app->register(new Silex\Provider\TwigServiceProvider(), array(
 $app['oauth2'] = new League\OAuth2\Client\Provider\Github(array(
     'clientId'     =>  $_ENV['GITHUB_CLIENT_ID'],
     'clientSecret' =>  $_ENV['GITHUB_CLIENT_SECRET'],
-    //'redirectUri'  =>  '/auth/github/callback',
-    'scopes' => array('read:org'),
+    'scopes' => array('user:email', 'read:org'),
     'domain' => 'https://github.corp.ebay.com'
 ));
 

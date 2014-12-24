@@ -28,6 +28,13 @@
   <body>
     <div class="container">
       <div class="row">
+        <div class="col-md-1 col-md-offset-11">
+          <p class="text-right">
+            <a href="/logout"><span class="glyphicon glyphicon-log-out" aria-hidden="true"></span>&nbsp;Logout</a>
+          </p>
+        </div>
+      </div>
+      <div class="row" id="pull-requests-wrapper">
         <div class="col-md-12" id="pull-requests">
           {% if pullRequests|length > 0 %}
             <h2>{{ pullRequests|length }} Pull requests pending merge</h2>
@@ -82,7 +89,7 @@
         jQuery("time.timeago").timeago();
       });
       setInterval(function () {
-        $('.row').load(
+        $('#pull-requests-wrapper').load(
           document.URL +  ' #pull-requests',
           function() {jQuery("time.timeago").timeago()}
       )}, {{ refreshTime }});
