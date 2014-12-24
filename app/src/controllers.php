@@ -63,7 +63,7 @@ $app->post('/{vcsName}/pullRequest', function(Request $httpRequest, $vcsName) us
                 )
             );
         if ($pullRequest) {
-            $pullRequest->setClosed($PullRequest);
+            $pullRequest = $payload->setClosed($PullRequest);
             $app['doctrine.odm.mongodb.dm']->persist($pullRequest);
             $app['doctrine.odm.mongodb.dm']->flush();
             return new Response('Pull request closed', 200);
