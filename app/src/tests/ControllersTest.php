@@ -13,12 +13,19 @@ class ControllersGithubTest extends WebTestCase
         return $app;
     }
 
-    public function testInitialPage()
+    public function testInitialPageLogged()
     {
         $this->app['session']->set('access_token', 'fakeToken');
         $client = $this->createClient();
         $crawler = $client->request('GET', '/');
         $this->assertEquals(Response::HTTP_OK, $client->getResponse()->getStatusCode());
+    }
+
+    public function testInitialPageNotLogged()
+    {
+        $client = $this->createClient();
+        $crawler = $client->request('GET', '/');
+        $this->assertEquals(Response::HTTP_FOUND, $client->getResponse()->getStatusCode());
     }
 
     public function testNonExistentUrl()
