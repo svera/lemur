@@ -1,7 +1,5 @@
 FROM php:5.4-apache
 ENV LEMUR_ENV devel
-ENV GITHUB_CLIENT_ID <put client id>
-ENV GITHUB_CLIENT_SECRET <put client secret>
 RUN curl -sS https://getcomposer.org/installer | php
 RUN mv composer.phar /usr/local/bin/composer
 RUN apt-get update && apt-get install -y zlib1g-dev git

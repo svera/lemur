@@ -14,6 +14,8 @@ if (getenv('LEMUR_ENV') == 'devel') {
     require __DIR__.'/config/prod.php';
 }
 
+require __DIR__.'/config/secrets.php';
+
 $app->register(new MongoDBODMServiceProvider(), array(
     'doctrine.odm.mongodb.connection_options' => array(
         'database' => $app['config.db.name'],
@@ -49,10 +51,10 @@ $app->register(new Silex\Provider\TwigServiceProvider(), array(
  * OAuth2
  */
 $app['oauth2'] = new League\OAuth2\Client\Provider\Github(array(
-    'clientId'     =>  $_ENV['GITHUB_CLIENT_ID'],
-    'clientSecret' =>  $_ENV['GITHUB_CLIENT_SECRET'],
+    'clientId'     =>  $app['config.secrets.github_client_id'],
+    'clientSecret' =>  $app['config.secrets.github_client_secret'],
     'scopes' => array('user:email', 'read:org'),
-    'domain' => 'https://github.corp.ebay.com'
+    'domain' => 'https://github.com'
 ));
 
 /**

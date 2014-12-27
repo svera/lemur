@@ -8,21 +8,24 @@ class ControllersGitlabTest extends WebTestCase
     public function createApplication()
     {
         putenv('LEMUR_ENV=test');
-        return require __DIR__.'/../../web/index.php';
+        $app = require __DIR__.'/../../web/index.php';
+        $app['session.test'] = true;
+        return $app;
     }
 
     public function testInitialPage()
     {
+        $this->app['session']->set('access_token', 'fakeToken');
         $client = $this->createClient();
         $crawler = $client->request('GET', '/');
-        $this->assertTrue($client->getResponse()->isOk());
+        $this->assertEquals(Response::HTTP_OK, $client->getResponse()->getStatusCode());
     }
 
     public function testNonExistentUrl()
     {
         $client = $this->createClient();
-        $crawler = $client->request('GET', '/nonexistent');
-        $this->assertTrue($client->getResponse()->isNotFound());
+        $client->request('GET', '/nonexistent');
+        $this->assertEquals(Response::HTTP_NOT_FOUND, $client->getResponse()->getStatusCode());
     }
 
     public function testNoPayloadOrWrongPayloadSent()
@@ -70,7 +73,7 @@ class ControllersGitlabTest extends WebTestCase
             array('CONTENT_TYPE' => 'application/json'),
             file_get_contents(__DIR__.'/fixtures/gitlabCloseMergeRequestPayload.json')
         );
-        $this->assertTrue($client->getResponse()->isOk());
+        $this->assertEquals(Response::HTTP_OK, $client->getResponse()->getStatusCode());
     }
 
 }

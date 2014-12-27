@@ -8,21 +8,24 @@ class ControllersGithubTest extends WebTestCase
     public function createApplication()
     {
         putenv('LEMUR_ENV=test');
-        return require __DIR__.'/../../web/index.php';
+        $app = require __DIR__.'/../../web/index.php';
+        $app['session.test'] = true;
+        return $app;
     }
 
     public function testInitialPage()
     {
+        $this->app['session']->set('access_token', 'fakeToken');
         $client = $this->createClient();
-        $client->request('GET', '/');
-        $this->assertTrue($client->getResponse()->isOk());
+        $crawler = $client->request('GET', '/');
+        $this->assertEquals(Response::HTTP_OK, $client->getResponse()->getStatusCode());
     }
 
     public function testNonExistentUrl()
     {
         $client = $this->createClient();
         $client->request('GET', '/nonexistent');
-        $this->assertTrue($client->getResponse()->isNotFound());
+        $this->assertEquals(Response::HTTP_NOT_FOUND, $client->getResponse()->getStatusCode());
     }
 
     public function testNoPayloadOrWrongPayloadSent()
@@ -65,7 +68,7 @@ class ControllersGithubTest extends WebTestCase
             array('CONTENT_TYPE' => 'application/json'),
             file_get_contents(__DIR__.'/fixtures/githubNewPullRequestCommentPayload.json')
         );
-        $this->assertTrue($client->getResponse()->isOk());
+        $this->assertEquals(Response::HTTP_OK, $client->getResponse()->getStatusCode());
     }
 
     public function testCloseGithubPullRequest()
@@ -79,7 +82,7 @@ class ControllersGithubTest extends WebTestCase
             array('CONTENT_TYPE' => 'application/json'),
             file_get_contents(__DIR__.'/fixtures/githubClosePullRequestPayload.json')
         );
-        $this->assertTrue($client->getResponse()->isOk());
+        $this->assertEquals(Response::HTTP_OK, $client->getResponse()->getStatusCode());
     }
 
 }
