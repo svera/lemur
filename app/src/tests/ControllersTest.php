@@ -37,9 +37,9 @@ class ControllersGithubTest extends WebTestCase
         $client->request(
             'POST',
             $url,
-            array(),
-            array(),
-            array('CONTENT_TYPE' => 'application/json'),
+            [],
+            [],
+            ['CONTENT_TYPE' => 'application/json'],
             $payload
         );
         $this->assertEquals(
@@ -65,9 +65,9 @@ class ControllersGithubTest extends WebTestCase
         $client->request(
             'POST',
             $url,
-            array(),
-            array(),
-            array('CONTENT_TYPE' => 'application/json'),
+            [],
+            [],
+            ['CONTENT_TYPE' => 'application/json'],
             $payload
         );
         $this->assertEquals($expected, $client->getResponse()->getStatusCode());
@@ -92,9 +92,9 @@ class ControllersGithubTest extends WebTestCase
         $client->request(
             'POST',
             $url,
-            array(),
-            array(),
-            array('CONTENT_TYPE' => 'application/json'),
+            [],
+            [],
+            ['CONTENT_TYPE' => 'application/json'],
             $payload
         );
         $this->assertEquals(Response::HTTP_OK, $client->getResponse()->getStatusCode());
