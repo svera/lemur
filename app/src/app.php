@@ -16,7 +16,9 @@ if (getenv('LEMUR_ENV') == 'devel') {
     require __DIR__.'/config/prod.php';
 }
 
-require __DIR__.'/config/secrets.php';
+if (getenv('LEMUR_ENV') != 'test') {
+    require __DIR__.'/config/secrets.php';
+}
 
 $app->register(new MongoDBODMServiceProvider(), array(
     'doctrine.odm.mongodb.connection_options' => array(

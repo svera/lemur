@@ -5,4 +5,5 @@ php:
 before_script:
   - cd app
   - echo "extension=mongo.so" >> ~/.phpenv/versions/$(phpenv version-name)/etc/php.ini
+  - export LEMUR_ENV=test
   - composer install
