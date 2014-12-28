@@ -1,5 +1,7 @@
 # Lemur
 
+[![Build Status](https://travis-ci.org/svera/lemur.svg)](https://travis-ci.org/svera/lemur)
+
 If you have to review pull/merge requests in multiple repositories along 
 several platforms such as [Github](https://github.com) or 
 [Gitlab](https://about.gitlab.com), you already know what a pain is to track
