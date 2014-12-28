@@ -9,7 +9,7 @@
      stopOnFailure="false"
      syntaxCheck="false">
   <testsuites>
-    <testsuitename="Lemur">
+    <testsuite name="Lemur">
         <directory>./src/tests/</directory>
     </testsuite>
   </testsuites> 
