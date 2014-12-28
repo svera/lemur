@@ -18,6 +18,9 @@ if (getenv('LEMUR_ENV') == 'devel') {
 
 if (getenv('LEMUR_ENV') != 'test') {
     require __DIR__.'/config/secrets.php';
+} else {
+    $app['config.secrets.github_client_id'] = '';
+    $app['config.secrets.github_client_secret'] = '';
 }
 
 $app->register(new MongoDBODMServiceProvider(), array(
