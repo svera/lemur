@@ -7,8 +7,7 @@
      convertWarningsToExceptions="true"
      processIsolation="false"
      stopOnFailure="false"
-     syntaxCheck="false"
-     bootstrap="web/index.php">
+     syntaxCheck="false">
   <testsuites>
     <testsuite name="Lemur">
         <directory>./src/tests/</directory>
