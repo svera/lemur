@@ -21,6 +21,7 @@ class ControllersGithubTest extends WebTestCase
         $client = $this->createClient();
         $crawler = $client->request('GET', '/');
         $this->assertEquals(Response::HTTP_OK, $client->getResponse()->getStatusCode());
+        var_dump($client->getResponse()->getContent());
     }
 
     public function testInitialPageNotLogged()
