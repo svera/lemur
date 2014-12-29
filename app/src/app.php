@@ -14,7 +14,7 @@ if ($environment == 'devel') {
     ini_set('display_errors', '1');
     ini_set('display_startup_errors', '1');
     require __DIR__.'/config/devel.php';
-} elseif ($environment == 'test' || $environment == 'travis') {
+} elseif ($environment == 'test') {
     require __DIR__.'/config/test.php';
 } else {
     require __DIR__.'/config/prod.php';
