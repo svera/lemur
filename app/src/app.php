@@ -17,7 +17,7 @@ if ($environment == 'devel') {
     require __DIR__.'/config/prod.php';
 }
 
-if (getenv('LEMUR_ENV') != 'test') {
+if ($environment == 'prod' || $environment == 'devel') {
     require __DIR__.'/config/secrets.php';
 } else {
     $app['config.secrets.github_client_id'] = '';
@@ -27,7 +27,7 @@ if (getenv('LEMUR_ENV') != 'test') {
 $app->register(new MongoDBODMServiceProvider(), array(
     'doctrine.odm.mongodb.connection_options' => array(
         'database' => $app['config.db.name'],
-        'host'     => $environment == 'travis' ? '127.0.0.1' : 'mongo',
+        'host'     => $environment == 'travis' ? 'http://127.0.0.1' : 'mongo',
         'options'  => array('fsync' => false)
     ),
     'doctrine.odm.mongodb.documents' => array(
