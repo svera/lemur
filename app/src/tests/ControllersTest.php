@@ -9,7 +9,7 @@ class ControllersGithubTest extends WebTestCase
 {
     public function createApplication()
     {
-        putenv('LEMUR_ENV=test');
+        //putenv('LEMUR_ENV=test');
         $app = require __DIR__.'/../../web/index.php';
         $app['session.test'] = true;
         return $app;
@@ -21,7 +21,6 @@ class ControllersGithubTest extends WebTestCase
         $client = $this->createClient();
         $crawler = $client->request('GET', '/');
         $this->assertEquals(Response::HTTP_OK, $client->getResponse()->getStatusCode());
-        echo $client->getResponse()->getContent();
     }
 
     public function testInitialPageNotLogged()
