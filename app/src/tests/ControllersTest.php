@@ -1,5 +1,7 @@
 <?php
 
+require_once __DIR__.'/../../vendor/autoload.php';
+
 use Silex\WebTestCase;
 use Symfony\Component\HttpFoundation\Response;
 
