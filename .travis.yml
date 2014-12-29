@@ -2,8 +2,10 @@ language: php
 php:
   - "5.4"
   - "5.5"
+services:
+  - mongodb
+env: LEMUR_ENV=travis
 before_script:
   - cd app
   - echo "extension=mongo.so" >> ~/.phpenv/versions/$(phpenv version-name)/etc/php.ini
-  - export LEMUR_ENV=test
   - composer install

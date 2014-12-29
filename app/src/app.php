@@ -7,10 +7,11 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\ParameterBag;
 
 $app = new Silex\Application();
+$environment = getenv('LEMUR_ENV');
 
-if (getenv('LEMUR_ENV') == 'devel') {
+if ($environment == 'devel') {
     require __DIR__.'/config/devel.php';
-} elseif (getenv('LEMUR_ENV') == 'test') {
+} elseif ($environment == 'test' || $environment == 'travis') {
     require __DIR__.'/config/test.php';
 } else {
     require __DIR__.'/config/prod.php';
@@ -26,7 +27,7 @@ if (getenv('LEMUR_ENV') != 'test') {
 $app->register(new MongoDBODMServiceProvider(), array(
     'doctrine.odm.mongodb.connection_options' => array(
         'database' => $app['config.db.name'],
-        'host'     => 'mongo',
+        'host'     => $environment == 'travis' ? '127.0.0.1' : 'mongo',
         'options'  => array('fsync' => false)
     ),
     'doctrine.odm.mongodb.documents' => array(
