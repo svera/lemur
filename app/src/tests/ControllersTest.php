@@ -9,7 +9,7 @@ class ControllersGithubTest extends WebTestCase
 {
     public function createApplication()
     {
-        putenv('LEMUR_ENV=travis');
+        putenv('LEMUR_ENV=test');
         $app = require __DIR__.'/../../web/index.php';
         $app['session.test'] = true;
         return $app;

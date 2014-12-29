@@ -10,6 +10,9 @@ $app = new Silex\Application();
 $environment = getenv('LEMUR_ENV');
 
 if ($environment == 'devel') {
+    ini_set('error_reporting', E_ALL);
+    ini_set('display_errors', '1');
+    ini_set('display_startup_errors', '1');
     require __DIR__.'/config/devel.php';
 } elseif ($environment == 'test' || $environment == 'travis') {
     require __DIR__.'/config/test.php';
