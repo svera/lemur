@@ -13,12 +13,14 @@ class GithubPayload extends Payload implements PayloadInterface
     {
         $pullRequest = new PullRequest();
         $pullRequest->id = $this->payload['pull_request']['id'];
-        $pullRequest->name = $this->payload['pull_request']['title'];
+        $pullRequest->title = $this->payload['pull_request']['title'];
         $pullRequest->createdBy = $this->payload['pull_request']['user']['login'];
         $pullRequest->createdAt = $this->payload['pull_request']['created_at'];
         $pullRequest->numberComments = 0;
         $pullRequest->numberApprovals = 0;
         $pullRequest->numberDisapprovals = 0;
+        $pullRequest->repositoryName = $this->payload['repository']['name'];
+        $pullRequest->number = $this->payload['number'];
         $pullRequest->vcs = self::VCSNAME;
         $pullRequest->htmlUrl = $this->payload['pull_request']['html_url'];
         return $pullRequest;

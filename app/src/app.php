@@ -30,7 +30,7 @@ if ($environment == 'prod' || $environment == 'devel') {
 $app->register(new MongoDBODMServiceProvider(), array(
     'doctrine.odm.mongodb.connection_options' => array(
         'database' => $app['config.db.name'],
-        'host'     => $environment == 'travis' ? 'http://127.0.0.1' : 'mongo',
+        'host'     => 'mongo',
         'options'  => array('fsync' => false)
     ),
     'doctrine.odm.mongodb.documents' => array(

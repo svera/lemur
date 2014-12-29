@@ -13,9 +13,11 @@ class GitlabPayload extends Payload implements PayloadInterface
     {
         $pullRequest = new PullRequest();
         $pullRequest->id = $this->payload['object_attributes']['id'];
-        $pullRequest->name = $this->payload['object_attributes']['title'];
+        $pullRequest->title = $this->payload['object_attributes']['title'];
         $pullRequest->createdBy = $this->payload['user']['name'];
         $pullRequest->createdAt = $this->payload['object_attributes']['created_at'];
+        $pullRequest->repositoryName = $this->payload['object_attributes']['target']['name'];
+        $pullRequest->number = $this->payload['object_attributes']['id'];
         $pullRequest->vcs = self::VCSNAME;
         $pullRequest->htmlUrl = $this->payload['object_attributes']['source']['http_url'];
         return $pullRequest;

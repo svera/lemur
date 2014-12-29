@@ -11,7 +11,7 @@ class PullRequest
     public $id;
 
     /** @ODM\String */
-    public $name;
+    public $title;
 
     /** @ODM\Int */
     public $numberComments;
@@ -33,6 +33,12 @@ class PullRequest
 
     /** @ODM\String */
     public $status;
+
+    /** @ODM\String */
+    public $repositoryName;
+
+    /** @ODM\Int */
+    public $number;
 
     /** @ODM\String */
     public $vcs;
