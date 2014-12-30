@@ -23,14 +23,49 @@
         jQuery("time.timeago").timeago();
       });
 
-      var refresh = function () {
+      function supportsHtml5Storage() {
+        try {
+          return 'localStorage' in window && window['localStorage'] !== null;
+        } catch (e) {
+          return false;
+        }
+      }
+
+      if (supportsHtml5Storage()) {
+        localStorage.setItem('numberPullRequests', {{ pullRequests|length }});
+      }
+
+      function notify() {
+        if (!Notification) {
+          alert('Please us a modern version of Chrome, Firefox, Opera or Firefox.');
+          return;
+        }
+
+        if (Notification.permission !== "granted") {
+          Notification.requestPermission();
+        }
+
+        var notification = new Notification('Lemur', {
+          icon: '/images/favicon-160x160.png',
+          body: "There is a new pull request",
+        });
+        /*setTimeout(function(){
+          notification.cancel();
+          }, 3000);*/
+      }
+
+      var refresh = function() {
         $.get("/refresh", function(data) {
           $("title").html('(' + data.number_pull_requests + ') Lemur');
           $("#pull-requests-wrapper").html(data.html);
           jQuery("time.timeago").timeago();
+          if (data.number_pull_requests > localStorage.getItem('numberPullRequests')) {
+            notify();
+          }
+          localStorage.setItem('numberPullRequests', data.number_pull_requests);
         })
       };
-      
+
       setInterval(refresh, {{ refreshTime }});
     </script>
 {% endblock %}

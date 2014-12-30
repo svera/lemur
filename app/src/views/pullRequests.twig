@@ -5,7 +5,7 @@
       {% for pullRequest in pullRequests %}
         <li class="list-group-item">
           <div class="clearfix">
-            <h4 class="list-group-item-heading pull-left">
+            <p class="list-group-item-heading pull-left">
               {% if pullRequest.vcs == 'github' %}
                 <span class="fa fa-github" aria-hidden="true"></span>&nbsp;
               {% endif %}
@@ -13,7 +13,7 @@
                 <span class="fa fa-git" aria-hidden="true"></span>&nbsp;
               {% endif %}
               {{ pullRequest.repositoryName }}
-            </h4>
+            </p>
             {% if pullRequest.vcs == 'github' %}
               <div class="pull-right">
                 <span class="badge">
@@ -31,7 +31,7 @@
               </div>
             {% endif %}
           </div>
-          <p><span class="text-muted">{{ pullRequest.number }}</span> <a href="{{ pullRequest.htmlUrl }}">{{ pullRequest.title }}</a></p>
+          <h4><span class="text-muted">{{ pullRequest.number }}</span> <a href="{{ pullRequest.htmlUrl }}">{{ pullRequest.title }}</a></h4>
           <p><em>Created by {{ pullRequest.createdBy }} <time class="timeago" datetime="{{ pullRequest.createdAt }}">{{ pullRequest.createdAt }}</time></em></p>
         </li>
       {% endfor %}
@@ -39,5 +39,6 @@
   {% else %}
     <h2>Pull requests pending merge</h2>
     <p>No pull requests pending for merge</p>
+    <img src="images/dancinglemurs.gif" class="img-responsive center-block" alt="Dancing lemurs">
   {% endif %}
 </div>
