@@ -65,7 +65,7 @@ $app['oauth2'] = new League\OAuth2\Client\Provider\Github(array(
     'clientId'     =>  $app['config.secrets.github_client_id'],
     'clientSecret' =>  $app['config.secrets.github_client_secret'],
     'scopes' => array('user:email', 'read:org'),
-    'domain' => 'https://github.com'
+    'domain' => $app['config.auth.domain']
 ));
 
 /**

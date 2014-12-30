@@ -117,4 +117,18 @@ class ControllersTest extends WebTestCase
                ];
     }
 
+    public function testRefreshUrlLogged()
+    {
+        $this->app['session']->set('access_token', 'fakeToken');
+        $client = $this->createClient();
+        $crawler = $client->request('GET', '/refresh');
+        $this->assertEquals(Response::HTTP_OK, $client->getResponse()->getStatusCode());
+    }
+
+    public function testRefreshUrlNotLogged()
+    {
+        $client = $this->createClient();
+        $crawler = $client->request('GET', '/refresh');
+        $this->assertEquals(Response::HTTP_FORBIDDEN, $client->getResponse()->getStatusCode());
+    }
 }

@@ -36,6 +36,12 @@ on these platforms in order to receive the needed information from them.
 
 ### Github
 
-## Tests
+## Useful commands
+
+### Connect to the MongoDB instance client
+
+Type ```fig run mongo mongo mongo/lemur-dev``` (development) or ```fig run mongo mongo mongo/lemur``` (production).
+
+### Tests
 
 Type ```fig run app phpunit src/tests``` to run all tests.

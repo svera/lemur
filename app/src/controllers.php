@@ -9,9 +9,10 @@ $app->get('/login', function() use ($app) {
     if ($app['session']->get('access_token') != null) {
         return $app->redirect('/');
     }
-    return $app['twig']->render('login.twig', array(
-        'loginPath' => $app['oauth2']->getAuthorizationUrl()
-    ));
+    return $app['twig']->render(
+        'login.twig',
+        ['loginPath' => $app['oauth2']->getAuthorizationUrl()]
+    );
 });
 
 $app->get('/logout', function() use ($app) {
@@ -26,14 +27,15 @@ $app->get('/', function() use ($app) {
     $pullRequests = $app['doctrine.odm.mongodb.dm']
     ->getRepository('Src\\Entities\\PullRequest')
     ->findAll(
-        array(
-            'status' => 'open'
-        )
+        ['status' => 'open']
     );
-    return $app['twig']->render('index.twig', array(
-        'pullRequests' => $pullRequests,
-        'refreshTime'  => $app['config.refreshTime']
-    ));
+    return $app['twig']->render(
+        'index.twig',
+        [
+            'pullRequests' => $pullRequests,
+            'refreshTime'  => $app['config.refreshTime']
+        ]
+    );
 });
 
 $app->get('/auth/github/callback', function(Request $httpRequest) use ($app) {
@@ -50,27 +52,27 @@ $app->post('/{vcsName}/pullRequest', function(Request $httpRequest, $vcsName) us
         $pullRequest = $payload->createPullRequest();
         $app['doctrine.odm.mongodb.dm']->persist($pullRequest);
         $app['doctrine.odm.mongodb.dm']->flush();
-        return new Response('Pull request created', 201);
+        return new Response('Pull request created', Response::HTTP_CREATED);
     }
 
     if ($payload->isClosePullRequestPayload()) {
         $pullRequest = $app['doctrine.odm.mongodb.dm']
             ->getRepository('Src\\Entities\\PullRequest')
             ->findOneBy(
-                array(
+                [
                     'id' => $payload->getPullRequestIdFromPayload(),
                     'vcs' => $payload::VCSNAME
-                )
+                ]
             );
         if ($pullRequest) {
             $pullRequest = $payload->setClosed($pullRequest);
             $app['doctrine.odm.mongodb.dm']->persist($pullRequest);
             $app['doctrine.odm.mongodb.dm']->flush();
-            return new Response('Pull request closed', 200);
+            return new Response('Pull request closed', Response::HTTP_OK);
         }
-        return new Response('Pull request not found', 410);
+        return new Response('Pull request not found', Response::HTTP_GONE);
     }
-    return new Response('Payload error', 400);
+    return new Response('Payload error', Response::HTTP_BAD_REQUEST);
 });
 
 $app->post('/{vcsName}/pullRequestComment', function(Request $httpRequest, $vcsName) use ($app) {
@@ -79,18 +81,37 @@ $app->post('/{vcsName}/pullRequestComment', function(Request $httpRequest, $vcsN
         $pullRequest = $app['doctrine.odm.mongodb.dm']
             ->getRepository('Src\\Entities\\PullRequest')
             ->findOneBy(
-                array(
+                [
                     'id' => $payload->getPullRequestIdFromPayload(),
                     'vcs' => $payload::VCSNAME
-                )
+                ]
             );
         $pullRequest = $payload->updateComments($pullRequest);
         if ($pullRequest) {
             $app['doctrine.odm.mongodb.dm']->persist($pullRequest);
             $app['doctrine.odm.mongodb.dm']->flush();
-            return new Response('Pull request updated', 200);
+            return new Response('Pull request updated', Response::HTTP_OK);
         }
-        return new Response('Pull request not found', 410);
+        return new Response('Pull request not found', Response::HTTP_GONE);
     }
-    return new Response('Payload error', 400);
+    return new Response('Payload error', Response::HTTP_BAD_REQUEST);
+});
+
+$app->get('/refresh', function() use ($app) {
+    if ($app['session']->get('access_token') == null) {
+        return new Response('Forbiddden', Response::HTTP_FORBIDDEN);
+    }
+    $pullRequests = $app['doctrine.odm.mongodb.dm']
+    ->getRepository('Src\\Entities\\PullRequest')
+    ->findAll(
+        ['status' => 'open']
+    );
+    $response = [
+            'number_pull_requests' => count($pullRequests),
+            'html' => $app['twig']->render(
+                'pullRequests.twig',
+                ['pullRequests' => $pullRequests]    
+            )
+    ];
+    return $app->json($response, Response::HTTP_OK);
 });

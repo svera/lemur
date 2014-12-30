@@ -1,0 +1,43 @@
+<div class="col-md-12" id="pull-requests">
+  {% if pullRequests|length > 0 %}
+    <h2>{{ pullRequests|length }} Pull requests pending merge</h2>
+    <ul class="list-group">
+      {% for pullRequest in pullRequests %}
+        <li class="list-group-item">
+          <div class="clearfix">
+            <h4 class="list-group-item-heading pull-left">
+              {% if pullRequest.vcs == 'github' %}
+                <span class="fa fa-github" aria-hidden="true"></span>&nbsp;
+              {% endif %}
+              {% if pullRequest.vcs == 'gitlab' %}
+                <span class="fa fa-git" aria-hidden="true"></span>&nbsp;
+              {% endif %}
+              {{ pullRequest.repositoryName }}
+            </h4>
+            {% if pullRequest.vcs == 'github' %}
+              <div class="pull-right">
+                <span class="badge">
+                  <span class="glyphicon glyphicon-comment" aria-hidden="true"></span>
+                  &nbsp;{{ pullRequest.numberComments }}
+                </span>
+                <span class="badge alert-success">
+                  <span class="glyphicon glyphicon-thumbs-up" aria-hidden="true"></span>
+                  &nbsp;{{ pullRequest.numberApprovals }}
+                </span>
+                <span class="badge alert-danger">
+                  <span class="glyphicon glyphicon-thumbs-down" aria-hidden="true"></span>
+                  &nbsp;{{ pullRequest.numberDisapprovals }}
+                </span>
+              </div>
+            {% endif %}
+          </div>
+          <p><span class="text-muted">{{ pullRequest.number }}</span> <a href="{{ pullRequest.htmlUrl }}">{{ pullRequest.title }}</a></p>
+          <p><em>Created by {{ pullRequest.createdBy }} <time class="timeago" datetime="{{ pullRequest.createdAt }}">{{ pullRequest.createdAt }}</time></em></p>
+        </li>
+      {% endfor %}
+    </ul>
+  {% else %}
+    <h2>Pull requests pending merge</h2>
+    <p>No pull requests pending for merge</p>
+  {% endif %}
+</div>
