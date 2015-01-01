@@ -4,7 +4,7 @@ namespace Src\Entities;
 
 use Doctrine\ODM\MongoDB\Mapping\Annotations as ODM;
 
-/** @ODM\Document */
+/** @ODM\Document(collection="pullrequests") */
 class PullRequest
 {
     /** @ODM\Id(strategy="NONE") */

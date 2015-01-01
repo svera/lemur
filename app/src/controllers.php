@@ -52,7 +52,19 @@ $app->get('/auth/github/callback', function(Request $httpRequest) use ($app) {
 $app->post('/{vcsName}/pull-request', function(Request $httpRequest, $vcsName) use ($app) {
     $payload = PayloadFactory::create($vcsName, $httpRequest);
     if ($payload->isCreatePullRequestPayload()) {
-        $pullRequest = $payload->createPullRequest();
+        $pullRequest = $app['doctrine.odm.mongodb.dm']
+            ->getRepository('Src\\Entities\\PullRequest')
+            ->findOneBy(
+                [
+                    'id' => $payload->getPullRequestIdFromPayload(),
+                    'vcs' => $payload::VCSNAME
+                ]
+            );
+        if ($pullRequest) {
+            $pullRequest->status = 'open';
+        } else {
+            $pullRequest = $payload->createPullRequest();
+        }
         $app['doctrine.odm.mongodb.dm']->persist($pullRequest);
         $app['doctrine.odm.mongodb.dm']->flush();
         return new Response('Pull request created', Response::HTTP_CREATED);

@@ -12,6 +12,7 @@ class ControllersTest extends WebTestCase
         putenv('LEMUR_ENV=test');
         $app = require __DIR__.'/../../web/index.php';
         $app['session.test'] = true;
+        //$app['doctrine.odm.mongodb.dm']->getDocumentCollection('Src\\Entities\\PullRequest')->remove([]);
         return $app;
     }
 
@@ -95,7 +96,7 @@ class ControllersTest extends WebTestCase
     /**
      * @dataProvider closePullRequestProvider
      */
-    public function testClosePullRequest($url, $payload)
+    public function testClosePullRequest($url, $payload, $expected)
     {
         $client = $this->createClient();
         $client->request(
@@ -106,14 +107,16 @@ class ControllersTest extends WebTestCase
             ['CONTENT_TYPE' => 'application/json'],
             $payload
         );
-        $this->assertEquals(Response::HTTP_OK, $client->getResponse()->getStatusCode());
+        $this->assertEquals($expected, $client->getResponse()->getStatusCode());
     }
 
     public function closePullRequestProvider()
     {
         return [
-                  ['/github/pull-request', file_get_contents(__DIR__.'/fixtures/githubClosePullRequestPayload.json')],
-                  ['/gitlab/pull-request', file_get_contents(__DIR__.'/fixtures/gitlabCloseMergeRequestPayload.json')]
+                  ['/github/pull-request', file_get_contents(__DIR__.'/fixtures/githubClosePullRequestPayload.json'), Response::HTTP_OK],
+                  ['/gitlab/pull-request', file_get_contents(__DIR__.'/fixtures/gitlabCloseMergeRequestPayload.json'), Response::HTTP_OK],
+                  ['/github/pull-request', file_get_contents(__DIR__.'/fixtures/githubCloseUnenxistentPullRequestPayload.json'), Response::HTTP_GONE],
+                  ['/gitlab/pull-request', file_get_contents(__DIR__.'/fixtures/gitlabCloseUnenxistentMergeRequestPayload.json'), Response::HTTP_GONE]
                ];
     }
 
