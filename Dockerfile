@@ -14,3 +14,4 @@ COPY apache2.conf /etc/apache2/apache2.conf
 WORKDIR /var/www/lemur
 RUN composer install
 RUN ln -s /var/www/lemur/vendor/phpunit/phpunit/phpunit /usr/local/bin/phpunit
+RUN ln -s /var/www/lemur/vendor/bin/phpcs /usr/local/bin/phpcs

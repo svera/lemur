@@ -2,6 +2,8 @@
 
 require_once __DIR__.'/../../vendor/autoload.php';
 
+namespace Tests
+
 use Silex\WebTestCase;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -86,10 +88,26 @@ class ControllersTest extends WebTestCase
     public function newAndUpdatePullRequestProvider()
     {
         return [
-                  ['/github/pull-request', file_get_contents(__DIR__.'/fixtures/githubNewPullRequestPayload.json'), Response::HTTP_CREATED],
-                  ['/github/pull-request-comment', file_get_contents(__DIR__.'/fixtures/githubNewPullRequestCommentPayload.json'), Response::HTTP_OK],
-                  ['/gitlab/pull-request', file_get_contents(__DIR__.'/fixtures/gitlabNewMergeRequestPayload.json'), Response::HTTP_CREATED],
-                  ['/gitlab/pull-request-comment', '', Response::HTTP_BAD_REQUEST]
+                    [
+                        '/github/pull-request',
+                        file_get_contents(__DIR__.'/fixtures/githubNewPullRequestPayload.json'),
+                        Response::HTTP_CREATED
+                    ],
+                    [
+                        '/github/pull-request-comment',
+                        file_get_contents(__DIR__.'/fixtures/githubNewPullRequestCommentPayload.json'),
+                        Response::HTTP_OK
+                    ],
+                    [
+                        '/gitlab/pull-request',
+                        file_get_contents(__DIR__.'/fixtures/gitlabNewMergeRequestPayload.json'),
+                        Response::HTTP_CREATED
+                    ],
+                    [
+                        '/gitlab/pull-request-comment',
+                        '',
+                        Response::HTTP_BAD_REQUEST
+                    ]
                ];
     }
 
@@ -113,10 +131,26 @@ class ControllersTest extends WebTestCase
     public function closePullRequestProvider()
     {
         return [
-                  ['/github/pull-request', file_get_contents(__DIR__.'/fixtures/githubClosePullRequestPayload.json'), Response::HTTP_OK],
-                  ['/gitlab/pull-request', file_get_contents(__DIR__.'/fixtures/gitlabCloseMergeRequestPayload.json'), Response::HTTP_OK],
-                  ['/github/pull-request', file_get_contents(__DIR__.'/fixtures/githubCloseUnenxistentPullRequestPayload.json'), Response::HTTP_GONE],
-                  ['/gitlab/pull-request', file_get_contents(__DIR__.'/fixtures/gitlabCloseUnenxistentMergeRequestPayload.json'), Response::HTTP_GONE]
+                    [
+                        '/github/pull-request',
+                        file_get_contents(__DIR__.'/fixtures/githubClosePullRequestPayload.json'),
+                        Response::HTTP_OK
+                    ],
+                    [
+                        '/gitlab/pull-request',
+                        file_get_contents(__DIR__.'/fixtures/gitlabCloseMergeRequestPayload.json'),
+                        Response::HTTP_OK
+                    ],
+                    [
+                        '/github/pull-request',
+                        file_get_contents(__DIR__.'/fixtures/githubCloseUnenxistentPullRequestPayload.json'),
+                        Response::HTTP_GONE
+                    ],
+                    [
+                        '/gitlab/pull-request',
+                        file_get_contents(__DIR__.'/fixtures/gitlabCloseUnenxistentMergeRequestPayload.json'),
+                        Response::HTTP_GONE
+                    ]
                ];
     }
 

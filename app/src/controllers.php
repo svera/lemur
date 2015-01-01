@@ -125,7 +125,7 @@ $app->get('/refresh', function() use ($app) {
             'number_pull_requests' => count($pullRequests),
             'html' => $app['twig']->render(
                 'pullRequests.twig',
-                ['pullRequests' => $pullRequests]    
+                ['pullRequests' => $pullRequests]
             )
     ];
     return $app->json($response, Response::HTTP_OK);

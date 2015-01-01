@@ -26,7 +26,7 @@ provided by them.
 Just clone the project and run ```fig up``` to build the containers and run the
 application. Follow the steps on [https://github.com/svera/fig-silex](https://github.com/svera/fig-silex) if you need more information.
 
-For development testing, you also need a way for external services to reach
+For development, you also need a way for external services to reach
 your environment. For that, you can use [ngrok](https://ngrok.com/).
 
 ## Use
@@ -45,3 +45,7 @@ Type ```fig run mongo mongo mongo/lemur-dev``` (development) or ```fig run mongo
 ### Tests
 
 Type ```fig run app phpunit src/tests``` to run all tests.
+
+### PHP code sniffer
+
+Type ```fig run app phpcs ./src --standard=psr2``` to check souce code for style errors.
