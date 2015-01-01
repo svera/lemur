@@ -10,19 +10,19 @@ $app->get('/', function() use ($app) {
         return $app->redirect('/pull-requests');
     }
     return $app['twig']->render(
-        'login.twig',
+        'index.twig',
         ['loginPath' => $app['oauth2']->getAuthorizationUrl()]
     );
 });
 
 $app->get('/logout', function() use ($app) {
     $app['session']->set('access_token', null);
-    return $app->redirect('/login');
+    return $app->redirect('/');
 });
 
 $app->get('/pull-requests', function() use ($app) {
     if ($app['session']->get('access_token') == null) {
-        return $app->redirect('/login');
+        return $app->redirect('/');
     }
     $pullRequests = $app['doctrine.odm.mongodb.dm']
     ->getRepository('Src\\Entities\\PullRequest')
@@ -30,7 +30,7 @@ $app->get('/pull-requests', function() use ($app) {
         ['status' => 'open']
     );
     return $app['twig']->render(
-        'index.twig',
+        'main.twig',
         [
             'pullRequests' => $pullRequests,
             'refreshTime'  => $app['config.refreshTime']
