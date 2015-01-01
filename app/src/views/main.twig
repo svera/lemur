@@ -3,14 +3,16 @@
 {% block title %}({{ pullRequests|length }}) Lemur{% endblock %}
 
 {% block content %}
-  <div class="container">
-    <div class="row">
-      <div class="col-md-1 col-md-offset-11">
-        <p class="text-right">
-          <a href="/logout"><span class="glyphicon glyphicon-log-out" aria-hidden="true"></span>&nbsp;Logout</a>
+  <nav class="navbar navbar-default">
+    <div class="container-fluid">
+      <div class="navbar-header">
+        <p class="navbar-text navbar-right">
+          <a href="/logout" class="navbar-link"><span class="glyphicon glyphicon-log-out" aria-hidden="true"></span>&nbsp;Logout</a>
         </p>
       </div>
     </div>
+  </nav>
+  <div class="container">
     <div class="row" id="pull-requests-wrapper">
       {% include 'pullRequests.twig' %}
     </div>
@@ -27,7 +29,8 @@
         try {
           return 'localStorage' in window && window['localStorage'] !== null;
         } catch (e) {
-          return false;
+          alert('Please us a modern version of Chrome, Firefox, Opera or Firefox.');
+          return;
         }
       }
 
@@ -35,7 +38,7 @@
         localStorage.setItem('numberPullRequests', {{ pullRequests|length }});
       }
 
-      function notify() {
+      function newNotification() {
         if (!Notification) {
           alert('Please us a modern version of Chrome, Firefox, Opera or Firefox.');
           return;
@@ -45,13 +48,10 @@
           Notification.requestPermission();
         }
 
-        var notification = new Notification('Lemur', {
+        return new Notification('Lemur', {
           icon: '/images/favicon-160x160.png',
           body: "There is a new pull request",
         });
-        /*setTimeout(function(){
-          notification.cancel();
-          }, 3000);*/
       }
 
       var refresh = function() {
@@ -60,7 +60,7 @@
           $("#pull-requests-wrapper").html(data.html);
           jQuery("time.timeago").timeago();
           if (data.number_pull_requests > localStorage.getItem('numberPullRequests')) {
-            notify();
+            newNotification();
           }
           localStorage.setItem('numberPullRequests', data.number_pull_requests);
         })
