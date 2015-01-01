@@ -5,9 +5,9 @@ use Symfony\Component\HttpFoundation\Response;
 use Src\Entities\PullRequest;
 use Src\Platforms\PayloadFactory;
 
-$app->get('/login', function() use ($app) {
+$app->get('/', function() use ($app) {
     if ($app['session']->get('access_token') != null) {
-        return $app->redirect('/');
+        return $app->redirect('/pull-requests');
     }
     return $app['twig']->render(
         'login.twig',
@@ -20,7 +20,7 @@ $app->get('/logout', function() use ($app) {
     return $app->redirect('/login');
 });
 
-$app->get('/', function() use ($app) {
+$app->get('/pull-requests', function() use ($app) {
     if ($app['session']->get('access_token') == null) {
         return $app->redirect('/login');
     }
@@ -46,7 +46,7 @@ $app->get('/auth/github/callback', function(Request $httpRequest) use ($app) {
     return $app->redirect('/');
 });
 
-$app->post('/{vcsName}/pullRequest', function(Request $httpRequest, $vcsName) use ($app) {
+$app->post('/{vcsName}/pull-request', function(Request $httpRequest, $vcsName) use ($app) {
     $payload = PayloadFactory::create($vcsName, $httpRequest);
     if ($payload->isCreatePullRequestPayload()) {
         $pullRequest = $payload->createPullRequest();
@@ -75,7 +75,7 @@ $app->post('/{vcsName}/pullRequest', function(Request $httpRequest, $vcsName) us
     return new Response('Payload error', Response::HTTP_BAD_REQUEST);
 });
 
-$app->post('/{vcsName}/pullRequestComment', function(Request $httpRequest, $vcsName) use ($app) {
+$app->post('/{vcsName}/pull-request-comment', function(Request $httpRequest, $vcsName) use ($app) {
     $payload = PayloadFactory::create($vcsName, $httpRequest);
     if ($payload->isCreateCommentPayload()) {
         $pullRequest = $app['doctrine.odm.mongodb.dm']

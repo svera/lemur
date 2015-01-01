@@ -20,20 +20,20 @@ class ControllersTest extends WebTestCase
         $this->app['session']->set('access_token', 'fakeToken');
         $client = $this->createClient();
         $crawler = $client->request('GET', '/');
-        $this->assertEquals(Response::HTTP_OK, $client->getResponse()->getStatusCode());
+        $this->assertEquals(Response::HTTP_FOUND, $client->getResponse()->getStatusCode());
     }
 
     public function testInitialPageNotLogged()
     {
         $client = $this->createClient();
         $crawler = $client->request('GET', '/');
-        $this->assertEquals(Response::HTTP_FOUND, $client->getResponse()->getStatusCode());
+        $this->assertEquals(Response::HTTP_OK, $client->getResponse()->getStatusCode());
     }
 
     public function testNonExistentUrl()
     {
         $client = $this->createClient();
-        $client->request('GET', '/nonexistent');
+        $client->request('GET', '/non-existent');
         $this->assertEquals(Response::HTTP_NOT_FOUND, $client->getResponse()->getStatusCode());
     }
 
@@ -60,8 +60,8 @@ class ControllersTest extends WebTestCase
     public function noPayloadOrWrongPayloadProvider()
     {
         return [
-                  ['/github/pullRequest', ''],
-                  ['/gitlab/pullRequest', '']
+                  ['/github/pull-request', ''],
+                  ['/gitlab/pull-request', '']
                ];
     }
 
@@ -85,10 +85,10 @@ class ControllersTest extends WebTestCase
     public function newAndUpdatePullRequestProvider()
     {
         return [
-                  ['/github/pullRequest', file_get_contents(__DIR__.'/fixtures/githubNewPullRequestPayload.json'), Response::HTTP_CREATED],
-                  ['/github/pullRequestComment', file_get_contents(__DIR__.'/fixtures/githubNewPullRequestCommentPayload.json'), Response::HTTP_OK],
-                  ['/gitlab/pullRequest', file_get_contents(__DIR__.'/fixtures/gitlabNewMergeRequestPayload.json'), Response::HTTP_CREATED],
-                  ['/gitlab/pullRequestComment', '', Response::HTTP_BAD_REQUEST]
+                  ['/github/pull-request', file_get_contents(__DIR__.'/fixtures/githubNewPullRequestPayload.json'), Response::HTTP_CREATED],
+                  ['/github/pull-request-comment', file_get_contents(__DIR__.'/fixtures/githubNewPullRequestCommentPayload.json'), Response::HTTP_OK],
+                  ['/gitlab/pull-request', file_get_contents(__DIR__.'/fixtures/gitlabNewMergeRequestPayload.json'), Response::HTTP_CREATED],
+                  ['/gitlab/pull-request-comment', '', Response::HTTP_BAD_REQUEST]
                ];
     }
 
@@ -112,8 +112,8 @@ class ControllersTest extends WebTestCase
     public function closePullRequestProvider()
     {
         return [
-                  ['/github/pullRequest', file_get_contents(__DIR__.'/fixtures/githubClosePullRequestPayload.json')],
-                  ['/gitlab/pullRequest', file_get_contents(__DIR__.'/fixtures/gitlabCloseMergeRequestPayload.json')]
+                  ['/github/pull-request', file_get_contents(__DIR__.'/fixtures/githubClosePullRequestPayload.json')],
+                  ['/gitlab/pull-request', file_get_contents(__DIR__.'/fixtures/gitlabCloseMergeRequestPayload.json')]
                ];
     }
 
