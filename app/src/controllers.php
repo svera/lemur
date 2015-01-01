@@ -29,7 +29,7 @@ $app->get('/pull-requests', function() use ($app) {
     }
     $pullRequests = $app['doctrine.odm.mongodb.dm']
     ->getRepository('Src\\Entities\\PullRequest')
-    ->findAll(
+    ->findBy(
         ['status' => 'open']
     );
     return $app['twig']->render(
@@ -106,7 +106,7 @@ $app->get('/refresh', function() use ($app) {
     }
     $pullRequests = $app['doctrine.odm.mongodb.dm']
     ->getRepository('Src\\Entities\\PullRequest')
-    ->findAll(
+    ->findBy(
         ['status' => 'open']
     );
     $response = [

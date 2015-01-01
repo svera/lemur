@@ -61,7 +61,7 @@ class GithubPayload extends Payload implements PayloadInterface
     public function setClosed(PullRequest $pullRequest)
     {
         $pullRequest->status = 'closed';
-        $pullRequest->updatedAt = $this->payload['closed_at'];
+        $pullRequest->updatedAt = $this->payload['pull_request']['closed_at'];
         return $pullRequest;
     }
 }
