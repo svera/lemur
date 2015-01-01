@@ -5,13 +5,16 @@ use Symfony\Component\HttpFoundation\Response;
 use Src\Entities\PullRequest;
 use Src\Platforms\PayloadFactory;
 
-$app->get('/', function() use ($app) {
+$app->get('/', function(Request $httpRequest) use ($app) {
     if ($app['session']->get('access_token') != null) {
         return $app->redirect('/pull-requests');
     }
     return $app['twig']->render(
         'index.twig',
-        ['loginPath' => $app['oauth2']->getAuthorizationUrl()]
+        [
+            'loginPath' => $app['oauth2']->getAuthorizationUrl(),
+            'warn' => $httpRequest->query->get('warn')
+        ]
     );
 });
 
@@ -22,7 +25,7 @@ $app->get('/logout', function() use ($app) {
 
 $app->get('/pull-requests', function() use ($app) {
     if ($app['session']->get('access_token') == null) {
-        return $app->redirect('/');
+        return $app->redirect('/?warn=You+need+to+be+logged+in+to+access+this+page.');
     }
     $pullRequests = $app['doctrine.odm.mongodb.dm']
     ->getRepository('Src\\Entities\\PullRequest')
