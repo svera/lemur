@@ -12,7 +12,7 @@ provided by them.
 
 ## Features
 
-* Show pull/merge requests from multiple repositories and services.
+* See pull/merge requests from multiple repositories and services from a single place.
 * Show +1/-1 comments in each pull request (Github only).
 * Show pull requests' waiting time.
 
@@ -23,18 +23,33 @@ provided by them.
 
 ## Installation
 
+### 1. Deployment
+
 Just clone the project and run ```fig up``` to build the containers and run the
 application. Follow the steps on [https://github.com/svera/fig-silex](https://github.com/svera/fig-silex) if you need more information.
+
+### 2. Register application
+
+Lemur uses Github authentication for access control, so you need to register your recently deployed Lemur installation in Github. To do that,
+go to your user settings and choose *Applications* > *Register new application*. Fill in the form, putting ```<your domain>/auth/github/callback```in the *Authorization callback URL* field.
+You will get a client ID and a client secret key when done, put them into ```src/config/secrets.php``` (Use ```src/config/secrets.php.sample``` as an example). Remember, DO NOT UPLOAD THIS FILE TO ANY PUBLIC REPOSITORY!
+
+### 3. Register webhooks
+
+The last step is to configure your repositories to link some events so they can be registered by Lemur. To do that, we use the webhooks provided
+by the supported platforms:
+
+#### Github
+
+Go to the repository settings and select *Webhooks & Services > Webhooks*. Once there, associate ```<your domain>/pull-request``` to the *Pull Request* and *Pull Request review comment* events.
+
+#### Gitlab
+
+### Additional considerations
 
 For development, you also need a way for external services to reach
 your environment. For that, you can use [ngrok](https://ngrok.com/).
 
-## Use
-
-Right now, Lemur supports Github and Gitlab. You need to configure some webhooks
-on these platforms in order to receive the needed information from them.
-
-### Github
 
 ## Useful commands
 
