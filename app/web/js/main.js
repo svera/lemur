@@ -1,3 +1,5 @@
+const REFRESH_TIME = 10000;
+
 function newNotification() {
   if (Notification.permission !== "granted") {
     Notification.requestPermission();
@@ -22,4 +24,4 @@ var refresh = function() {
 };
 
 refresh();
-setInterval(refresh, 10000);
+setInterval(refresh, REFRESH_TIME);

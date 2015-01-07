@@ -24,3 +24,7 @@ body {
   margin-top: 0;
   margin-bottom: 0;
 }
+
+.list-group-item-even {
+  background-color: #f8f8f8;
+}

@@ -3,7 +3,7 @@
     <h2>{{ pullRequests|length }} Pull requests pending merge</h2>
     <ul class="list-group">
       {% for pullRequest in pullRequests %}
-        <li class="list-group-item">
+        <li class="list-group-item {% if loop.index is even %}list-group-item-even{% endif %}">
           <div class="clearfix">
             <p class="list-group-item-heading pull-left">
               {% if pullRequest.vcs == 'github' %}
