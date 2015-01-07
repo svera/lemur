@@ -1,8 +1,7 @@
 <?php
+namespace Tests;
 
 require_once __DIR__.'/../../vendor/autoload.php';
-
-namespace Tests
 
 use Silex\WebTestCase;
 use Symfony\Component\HttpFoundation\Response;
