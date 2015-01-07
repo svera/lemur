@@ -1,11 +1,10 @@
 {% extends "layout.twig" %}
 
-{% block title %}({{ pullRequests|length }}) Lemur{% endblock %}
-
 {% block content %}
   <nav class="navbar navbar-default">
     <div class="container-fluid">
-      <div class="navbar-header">
+      <div class="navbar-header col-md-12">
+        <h1 class="navbar-brand">Lemur</h1>
         <p class="navbar-text navbar-right">
           <a href="/logout" class="navbar-link"><span class="glyphicon glyphicon-log-out" aria-hidden="true"></span>&nbsp;Logout</a>
         </p>
@@ -14,58 +13,10 @@
   </nav>
   <div class="container">
     <div class="row" id="pull-requests-wrapper">
-      {% include 'pullRequests.twig' %}
     </div>
   </div>
 {% endblock %}
 
 {% block js %}
-    <script type="text/javascript">
-      jQuery(document).ready(function() {
-        jQuery("time.timeago").timeago();
-      });
-
-      function supportsHtml5Storage() {
-        try {
-          return 'localStorage' in window && window['localStorage'] !== null;
-        } catch (e) {
-          alert('Please us a modern version of Chrome, Firefox, Opera or Firefox.');
-          return;
-        }
-      }
-
-      if (supportsHtml5Storage()) {
-        localStorage.setItem('numberPullRequests', {{ pullRequests|length }});
-      }
-
-      function newNotification() {
-        if (!Notification) {
-          alert('Please us a modern version of Chrome, Firefox, Opera or Firefox.');
-          return;
-        }
-
-        if (Notification.permission !== "granted") {
-          Notification.requestPermission();
-        }
-
-        return new Notification('Lemur', {
-          icon: '/images/favicon-160x160.png',
-          body: "There is a new pull request",
-        });
-      }
-
-      var refresh = function() {
-        $.get("/refresh", function(data) {
-          $("title").html('(' + data.number_pull_requests + ') Lemur');
-          $("#pull-requests-wrapper").html(data.html);
-          jQuery("time.timeago").timeago();
-          if (data.number_pull_requests > localStorage.getItem('numberPullRequests')) {
-            newNotification();
-          }
-          localStorage.setItem('numberPullRequests', data.number_pull_requests);
-        })
-      };
-
-      setInterval(refresh, {{ refreshTime }});
-    </script>
+    <script src="/js/main.js"></script>
 {% endblock %}

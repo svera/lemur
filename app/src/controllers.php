@@ -27,18 +27,7 @@ $app->get('/pull-requests', function() use ($app) {
     if ($app['session']->get('access_token') == null) {
         return $app->redirect('/?warn=You+need+to+be+logged+in+to+access+this+page.');
     }
-    $pullRequests = $app['doctrine.odm.mongodb.dm']
-    ->getRepository('Src\\Entities\\PullRequest')
-    ->findBy(
-        ['status' => 'open']
-    );
-    return $app['twig']->render(
-        'main.twig',
-        [
-            'pullRequests' => $pullRequests,
-            'refreshTime'  => $app['config.refreshTime']
-        ]
-    );
+    return $app['twig']->render('main.twig', []);
 });
 
 $app->get('/auth/github/callback', function(Request $httpRequest) use ($app) {
