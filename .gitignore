@@ -3,4 +3,3 @@ composer.lock
 cache/
 .DS_Store
 secrets.php
-.htaccess

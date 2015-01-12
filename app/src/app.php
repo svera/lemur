@@ -21,7 +21,11 @@ if ($environment == 'devel') {
 }
 
 if ($environment == 'prod' || $environment == 'devel') {
-    require __DIR__.'/config/secrets.php';
+    try {
+        require __DIR__.'/config/secrets.php';
+    } catch (FileNotFoundException $exception) {
+        return new Response('Secrets file not found', Response::HTTP_INTERNAL_SERVER_ERROR);
+    }
 } else {
     $app['config.secrets.github_client_id'] = '';
     $app['config.secrets.github_client_secret'] = '';
