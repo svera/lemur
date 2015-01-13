@@ -23,6 +23,7 @@ class GithubPayload extends Payload implements PayloadInterface
         $pullRequest->number = $this->payload['number'];
         $pullRequest->vcs = self::VCSNAME;
         $pullRequest->htmlUrl = $this->payload['pull_request']['html_url'];
+        $pullRequest->status = 'open';
         return $pullRequest;
     }
 

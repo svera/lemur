@@ -20,6 +20,7 @@ class GitlabPayload extends Payload implements PayloadInterface
         $pullRequest->number = $this->payload['object_attributes']['id'];
         $pullRequest->vcs = self::VCSNAME;
         $pullRequest->htmlUrl = $this->payload['object_attributes']['source']['http_url'];
+        $pullRequest->status = 'open';
         return $pullRequest;
     }
 
