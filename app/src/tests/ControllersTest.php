@@ -70,7 +70,7 @@ class ControllersTest extends WebTestCase
     /**
      * @dataProvider newAndUpdatePullRequestProvider
      */
-    public function testNewAndUpdatePullRequest($url, $payload, $expected)
+    public function testNewAndUpdatePullRequest($url, $headers, $payload, $expected)
     {
         $client = $this->createClient();
         $client->request(
@@ -78,7 +78,7 @@ class ControllersTest extends WebTestCase
             $url,
             [],
             [],
-            ['CONTENT_TYPE' => 'application/json'],
+            $headers,
             $payload
         );
         $this->assertEquals($expected, $client->getResponse()->getStatusCode());
@@ -89,21 +89,34 @@ class ControllersTest extends WebTestCase
         return [
                     [
                         '/github/pull-request',
+                        [
+                            'CONTENT_TYPE' => 'application/json',
+                        ],
                         file_get_contents(__DIR__.'/fixtures/githubNewPullRequestPayload.json'),
                         Response::HTTP_CREATED
                     ],
                     [
                         '/github/pull-request-comment',
+                        [
+                            'CONTENT_TYPE' => 'application/json',
+                            'HTTP_X-GitHub-Event' => 'pull_request_review_comment'
+                        ],
                         file_get_contents(__DIR__.'/fixtures/githubNewPullRequestCommentPayload.json'),
                         Response::HTTP_OK
                     ],
                     [
                         '/gitlab/pull-request',
+                        [
+                            'CONTENT_TYPE' => 'application/json',
+                        ],
                         file_get_contents(__DIR__.'/fixtures/gitlabNewMergeRequestPayload.json'),
                         Response::HTTP_CREATED
                     ],
                     [
                         '/gitlab/pull-request-comment',
+                        [
+                            'CONTENT_TYPE' => 'application/json',
+                        ],
                         '',
                         Response::HTTP_BAD_REQUEST
                     ]

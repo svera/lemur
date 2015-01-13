@@ -13,11 +13,18 @@ abstract class Payload
     protected $payload;
     
     /**
+     * Request headers
+     * @var array
+     */
+    protected $headers;
+
+    /**
      * Gets the payload from the passed request
      * @param Request $httpRequest
      */
     public function __construct(Request $httpRequest)
     {
         $this->payload = $httpRequest->request->all();
+        $this->headers = $httpRequest->headers->all();
     }
 }

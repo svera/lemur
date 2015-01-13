@@ -41,7 +41,7 @@ by the supported platforms:
 
 #### Github
 
-Go to the repository settings and select *Webhooks & Services > Webhooks*. Once there, associate ```<your domain>/pull-request``` to the *Pull Request* and *Pull Request review comment* events.
+Go to the repository settings and select *Webhooks & Services > Webhooks*. Once there, associate ```<your domain>/pull-request``` to the *Pull Request* event and ```<your domain>/pull-request-comment``` to the *Pull Request review comment* event.
 
 #### Gitlab
 
@@ -56,6 +56,8 @@ your environment. For that, you can use [ngrok](https://ngrok.com/).
 ### Connect to the MongoDB instance client
 
 Type ```fig run mongo mongo mongo/lemur-dev``` (development) or ```fig run mongo mongo mongo/lemur``` (production).
+
+Once in Mongo client, type ```db.pullrequests.find()``` to get all pull requests in the collection
 
 ### Tests
 
