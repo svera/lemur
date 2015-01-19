@@ -39,7 +39,10 @@ class GithubPayload extends Payload implements PayloadInterface
 
     public function isCreateCommentPayload()
     {
-        return $this->headers->get('x-github-event') == 'pull_request_review_comment';
+        return
+            $this->headers->get('x-github-event') == 'pull_request_review_comment' ||
+            $this->headers->get('x-github-event') == 'issue_comment' ||
+            $this->headers->get('x-github-event') == 'commit_comment';
     }
 
     public function updateComments(PullRequest $pullRequest)
