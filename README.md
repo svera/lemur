@@ -41,7 +41,8 @@ by the supported platforms:
 
 #### Github
 
-Go to the repository settings and select *Webhooks & Services > Webhooks*. Once there, associate ```<your domain>/pull-request``` to the *Pull Request* event and ```<your domain>/pull-request-comment``` to the *Pull Request review comment* event.
+Go to the repository settings and select *Webhooks & Services > Webhooks*. Once there, associate ```<your domain>/pull-request``` to the *Pull Request* event and ```<your domain>/pull-request-comment``` to the *Pull Request review comment*, *Issue comment* and
+*Commit comment* events.
 
 #### Gitlab
 
@@ -66,3 +67,7 @@ Type ```fig run app phpunit src/tests``` to run all tests.
 ### PHP code sniffer
 
 Type ```fig run app phpcs ./src --standard=psr2``` to check souce code for style errors.
+
+### PHP copy/paste detector
+
+Type ```fig run app phpcpd ./src``` to check souce code for duplicate lines.

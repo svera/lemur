@@ -9,7 +9,8 @@
     "require-dev": {
         "symfony/browser-kit": "2.6.*",
         "phpunit/phpunit": "4.4.*",
-        "squizlabs/php_codesniffer": "2.1.*"
+        "squizlabs/php_codesniffer": "2.1.*",
+        "sebastian/phpcpd": "2.0.*"
     },
     "autoload": {
         "psr-4": { 

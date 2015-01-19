@@ -15,3 +15,4 @@ WORKDIR /var/www/lemur
 RUN composer install
 RUN ln -s /var/www/lemur/vendor/phpunit/phpunit/phpunit /usr/local/bin/phpunit
 RUN ln -s /var/www/lemur/vendor/bin/phpcs /usr/local/bin/phpcs
+RUN ln -s /var/www/lemur/vendor/bin/phpcpd /usr/local/bin/phpcpd
