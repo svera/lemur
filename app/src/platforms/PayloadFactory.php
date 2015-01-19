@@ -16,5 +16,6 @@ class PayloadFactory
         if ($vcsName == 'gitlab') {
             return new GitlabPayload($httpRequest);
         }
+        return null;
     }
 }

@@ -40,15 +40,20 @@ $app->get('/auth/github/callback', function(Request $httpRequest) use ($app) {
 
 $app->post('/{vcsName}/pull-request', function(Request $httpRequest, $vcsName) use ($app) {
     $payload = PayloadFactory::create($vcsName, $httpRequest);
+    if (!$payload) {
+        return new Response('Platform not supported', Response::HTTP_UNPROCESSABLE_ENTITY);
+    }
+
+    $pullRequest = $app['doctrine.odm.mongodb.dm']
+        ->getRepository('Src\\Entities\\PullRequest')
+        ->findOneBy(
+            [
+                'id' => $payload->getPullRequestIdFromPayload(),
+                'vcs' => $payload::VCSNAME
+            ]
+        );
+
     if ($payload->isCreatePullRequestPayload()) {
-        $pullRequest = $app['doctrine.odm.mongodb.dm']
-            ->getRepository('Src\\Entities\\PullRequest')
-            ->findOneBy(
-                [
-                    'id' => $payload->getPullRequestIdFromPayload(),
-                    'vcs' => $payload::VCSNAME
-                ]
-            );
         if ($pullRequest) {
             $pullRequest->status = 'open';
         } else {
@@ -60,14 +65,6 @@ $app->post('/{vcsName}/pull-request', function(Request $httpRequest, $vcsName) u
     }
 
     if ($payload->isClosePullRequestPayload()) {
-        $pullRequest = $app['doctrine.odm.mongodb.dm']
-            ->getRepository('Src\\Entities\\PullRequest')
-            ->findOneBy(
-                [
-                    'id' => $payload->getPullRequestIdFromPayload(),
-                    'vcs' => $payload::VCSNAME
-                ]
-            );
         if ($pullRequest) {
             $pullRequest = $payload->setClosed($pullRequest);
             $app['doctrine.odm.mongodb.dm']->persist($pullRequest);
@@ -81,6 +78,9 @@ $app->post('/{vcsName}/pull-request', function(Request $httpRequest, $vcsName) u
 
 $app->post('/{vcsName}/pull-request-comment', function(Request $httpRequest, $vcsName) use ($app) {
     $payload = PayloadFactory::create($vcsName, $httpRequest);
+    if (!$payload) {
+        return new Response('Platform not supported', Response::HTTP_UNPROCESSABLE_ENTITY);
+    }
     if ($payload->isCreateCommentPayload()) {
         $pullRequest = $app['doctrine.odm.mongodb.dm']
             ->getRepository('Src\\Entities\\PullRequest')

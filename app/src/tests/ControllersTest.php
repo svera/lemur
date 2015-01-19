@@ -32,11 +32,35 @@ class ControllersTest extends WebTestCase
         $this->assertEquals(Response::HTTP_OK, $client->getResponse()->getStatusCode());
     }
 
-    public function testNonExistentUrl()
+    /**
+     * @dataProvider nonExistentUrlProvider
+     */
+    public function testNonExistentUrl($url, $method, $expected)
     {
         $client = $this->createClient();
-        $client->request('GET', '/non-existent');
-        $this->assertEquals(Response::HTTP_NOT_FOUND, $client->getResponse()->getStatusCode());
+        $client->request($method, $url);
+        $this->assertEquals($expected, $client->getResponse()->getStatusCode());
+    }
+
+    public function nonExistentUrlProvider()
+    {
+        return [
+                    [
+                        '/non-existent',
+                        'GET',
+                        Response::HTTP_NOT_FOUND
+                    ],
+                    [
+                        '/unexistent-platform/pull-request',
+                        'POST',
+                        Response::HTTP_UNPROCESSABLE_ENTITY
+                    ],
+                    [
+                        '/unexistent-platform/pull-request-comment',
+                        'POST',
+                        Response::HTTP_UNPROCESSABLE_ENTITY
+                    ]
+               ];
     }
 
     /**
