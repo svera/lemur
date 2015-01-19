@@ -14,7 +14,7 @@ abstract class Payload
     
     /**
      * Request headers
-     * @var array
+     * @var ParameterBag
      */
     protected $headers;
 
@@ -25,6 +25,6 @@ abstract class Payload
     public function __construct(Request $httpRequest)
     {
         $this->payload = $httpRequest->request->all();
-        $this->headers = $httpRequest->headers->all();
+        $this->headers = $httpRequest->headers;
     }
 }

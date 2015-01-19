@@ -90,8 +90,8 @@ $app->post('/{vcsName}/pull-request-comment', function(Request $httpRequest, $vc
                     'vcs' => $payload::VCSNAME
                 ]
             );
-        $pullRequest = $payload->updateComments($pullRequest);
         if ($pullRequest) {
+            $pullRequest = $payload->updateComments($pullRequest);
             $app['doctrine.odm.mongodb.dm']->persist($pullRequest);
             $app['doctrine.odm.mongodb.dm']->flush();
             return new Response('Pull request updated', Response::HTTP_OK);

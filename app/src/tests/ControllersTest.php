@@ -129,6 +129,15 @@ class ControllersTest extends WebTestCase
                         Response::HTTP_OK
                     ],
                     [
+                        '/github/pull-request-comment',
+                        [
+                            'CONTENT_TYPE' => 'application/json',
+                            'HTTP_X-GitHub-Event' => 'pull_request_review_comment'
+                        ],
+                        file_get_contents(__DIR__.'/fixtures/githubCommentUnexistentPullRequestPayload.json'),
+                        Response::HTTP_GONE
+                    ],
+                    [
                         '/gitlab/pull-request',
                         [
                             'CONTENT_TYPE' => 'application/json',
