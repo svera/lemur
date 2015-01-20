@@ -125,7 +125,16 @@ class ControllersTest extends WebTestCase
                             'CONTENT_TYPE' => 'application/json',
                             'HTTP_X-GitHub-Event' => 'pull_request_review_comment'
                         ],
-                        file_get_contents(__DIR__.'/fixtures/githubNewPullRequestCommentPayload.json'),
+                        file_get_contents(__DIR__.'/fixtures/githubNewPullRequestReviewCommentPayload.json'),
+                        Response::HTTP_OK
+                    ],
+                    [
+                        '/github/pull-request-comment',
+                        [
+                            'CONTENT_TYPE' => 'application/json',
+                            'HTTP_X-GitHub-Event' => 'issue_comment'
+                        ],
+                        file_get_contents(__DIR__.'/fixtures/githubNewIssueCommentPayload.json'),
                         Response::HTTP_OK
                     ],
                     [

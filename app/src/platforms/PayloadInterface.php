@@ -41,10 +41,16 @@ interface PayloadInterface
     public function isCreateCommentPayload();
 
     /**
-     * Returns pull request ID
+     * Returns pull request number
      * @return integer
      */
-    public function getPullRequestIdFromPayload();
+    public function getPullRequestNumberFromPayload();
+
+    /**
+     * Returns repository Id
+     * @return integer
+     */
+    public function getRepositoryIdFromPayload();
 
     /**
      * Marks a pull request as closed

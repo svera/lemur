@@ -16,6 +16,7 @@ class GitlabPayload extends Payload implements PayloadInterface
         $pullRequest->title = $this->payload['object_attributes']['title'];
         $pullRequest->createdBy = $this->payload['user']['name'];
         $pullRequest->createdAt = $this->payload['object_attributes']['created_at'];
+        $pullRequest->repositoryId = $this->payload['object_attributes']['target_project_id'];
         $pullRequest->repositoryName = $this->payload['object_attributes']['target']['name'];
         $pullRequest->number = $this->payload['object_attributes']['id'];
         $pullRequest->vcs = self::VCSNAME;
@@ -56,9 +57,14 @@ class GitlabPayload extends Payload implements PayloadInterface
         return false;
     }
 
-    public function getPullRequestIdFromPayload()
+    public function getPullRequestNumberFromPayload()
     {
         return $this->payload['object_attributes']['id'];
+    }
+
+    public function getRepositoryIdFromPayload()
+    {
+        return $this->payload['object_attributes']['target_project_id'];
     }
 
     public function setClosed(PullRequest $pullRequest)

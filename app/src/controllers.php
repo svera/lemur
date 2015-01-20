@@ -48,7 +48,8 @@ $app->post('/{vcsName}/pull-request', function(Request $httpRequest, $vcsName) u
         ->getRepository('Src\\Entities\\PullRequest')
         ->findOneBy(
             [
-                'id' => $payload->getPullRequestIdFromPayload(),
+                'repositoryId' => $payload->getRepositoryIdFromPayload(),
+                'number' => $payload->getPullRequestNumberFromPayload(),
                 'vcs' => $payload::VCSNAME
             ]
         );
@@ -86,7 +87,8 @@ $app->post('/{vcsName}/pull-request-comment', function(Request $httpRequest, $vc
             ->getRepository('Src\\Entities\\PullRequest')
             ->findOneBy(
                 [
-                    'id' => $payload->getPullRequestIdFromPayload(),
+                    'repositoryId' => $payload->getRepositoryIdFromPayload(),
+                    'number' => $payload->getPullRequestNumberFromPayload(),
                     'vcs' => $payload::VCSNAME
                 ]
             );

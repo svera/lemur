@@ -7,7 +7,7 @@ use Doctrine\ODM\MongoDB\Mapping\Annotations as ODM;
 /** @ODM\Document(collection="pullrequests") */
 class PullRequest
 {
-    /** @ODM\Id(strategy="NONE") */
+    /** @ODM\Id */
     public $id;
 
     /** @ODM\String */
@@ -33,6 +33,9 @@ class PullRequest
 
     /** @ODM\String */
     public $status;
+
+    /** @ODM\Int */
+    public $repositoryId;
 
     /** @ODM\String */
     public $repositoryName;

@@ -1,11 +1,14 @@
 <?php
+/**
+ * @version Github Enterprise 11.10.348
+ */
 
 namespace Src\Platforms;
 
 use Src\Entities\PullRequest;
 use Symfony\Component\HttpFoundation\Request;
 
-class GithubPayload extends Payload implements PayloadInterface
+final class GithubPayload extends Payload implements PayloadInterface
 {
     const VCSNAME = 'github';
 
@@ -19,6 +22,7 @@ class GithubPayload extends Payload implements PayloadInterface
         $pullRequest->numberComments = 0;
         $pullRequest->numberApprovals = 0;
         $pullRequest->numberDisapprovals = 0;
+        $pullRequest->repositoryId = $this->payload['repository']['id'];
         $pullRequest->repositoryName = $this->payload['repository']['name'];
         $pullRequest->number = $this->payload['number'];
         $pullRequest->vcs = self::VCSNAME;
@@ -57,9 +61,26 @@ class GithubPayload extends Payload implements PayloadInterface
         return $pullRequest;
     }
 
-    public function getPullRequestIdFromPayload()
+    public function getRepositoryIdFromPayload()
     {
-        return $this->payload['pull_request']['id'];
+        return $this->payload['repository']['id'];
+    }
+
+    public function getPullRequestNumberFromPayload()
+    {
+        switch ($this->headers->get('x-github-event'))
+        {
+            case 'issue_comment':
+                return (int)$this->payload['issue']['number'];
+            case 'pull_request_review_comment':
+                return (int)substr(
+                    $this->payload['comment']['pull_request_url'],
+                    strrpos($this->payload['comment']['pull_request_url'], '/') + 1
+                );
+            default:
+                return (int)$this->payload['pull_request']['number'];
+        }
+        return null;
     }
 
     public function setClosed(PullRequest $pullRequest)
