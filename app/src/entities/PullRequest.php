@@ -4,7 +4,10 @@ namespace Src\Entities;
 
 use Doctrine\ODM\MongoDB\Mapping\Annotations as ODM;
 
-/** @ODM\Document(collection="pullrequests") */
+/**
+ * @ODM\Document(collection="pullrequests")
+ * @UniqueIndex(keys={"repositoryId"="asc", "number"="asc"})
+ */
 class PullRequest
 {
     /** @ODM\Id */
