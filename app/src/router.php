@@ -40,7 +40,7 @@ $app->get('/auth/github/callback', function(Request $httpRequest) use ($app) {
 });
 
 /**
- * Centralized entry point for all events
+ * Centralized entry point for all webhook events
  */
 $app->post('/{vcsName}/event', function(Request $httpRequest, $vcsName) use ($app) {
     $payload = PayloadFactory::create($vcsName, $httpRequest);

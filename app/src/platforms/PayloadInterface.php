@@ -14,10 +14,10 @@ interface PayloadInterface
     public function createPullRequest();
 
     /**
-     * Update the PR comment info using the received payload
-     * @return PullRequest
+     * Get payload comment
+     * @return string
      */
-    public function updateComments(PullRequest $pullRequest);
+    public function getComment();
 
     /**
      * Returns true if the current payload refers to a newly created/reopened
@@ -44,16 +44,16 @@ interface PayloadInterface
      * Returns pull request number
      * @return integer
      */
-    public function getPullRequestNumberFromPayload();
+    public function getPullRequestNumber();
 
     /**
      * Returns repository Id
      * @return integer
      */
-    public function getRepositoryIdFromPayload();
+    public function getRepositoryId();
 
     /**
      * Marks a pull request as closed
      */
-    public function setClosed(PullRequest $pullRequest);
+    public function getEventDateTime();
 }

@@ -15,15 +15,7 @@ class PullRequestController
 
     public function open($payload)
     {
-        $pullRequest = $this->odm
-            ->getRepository('Src\\Entities\\PullRequest')
-            ->findOneBy(
-                [
-                    'repositoryId' => $payload->getRepositoryIdFromPayload(),
-                    'number' => $payload->getPullRequestNumberFromPayload(),
-                    'vcs' => $payload::VCSNAME
-                ]
-            );
+        $pullRequest = $this->getPullRequest($payload);
 
         if ($pullRequest) {
             $pullRequest->status = 'open';
@@ -37,18 +29,11 @@ class PullRequestController
 
     public function close($payload)
     {
-        $pullRequest = $this->odm
-            ->getRepository('Src\\Entities\\PullRequest')
-            ->findOneBy(
-                [
-                    'repositoryId' => $payload->getRepositoryIdFromPayload(),
-                    'number' => $payload->getPullRequestNumberFromPayload(),
-                    'vcs' => $payload::VCSNAME
-                ]
-            );
+        $pullRequest = $this->getPullRequest($payload);
 
         if ($pullRequest) {
-            $pullRequest = $payload->setClosed($pullRequest);
+            $pullRequest->status = 'closed';
+            $pullRequest->updatedAt = $payload->getEventDateTime();
             $this->odm->persist($pullRequest);
             $this->odm->flush();
             return new Response('Pull request closed', Response::HTTP_OK);
@@ -58,22 +43,33 @@ class PullRequestController
 
     public function update($payload)
     {
-        $pullRequest = $this->odm
-            ->getRepository('Src\\Entities\\PullRequest')
-            ->findOneBy(
-                [
-                    'repositoryId' => $payload->getRepositoryIdFromPayload(),
-                    'number' => $payload->getPullRequestNumberFromPayload(),
-                    'vcs' => $payload::VCSNAME
-                ]
-            );
+        $pullRequest = $this->getPullRequest($payload);
 
         if ($pullRequest) {
-            $pullRequest = $payload->updateComments($pullRequest);
+            $pullRequest->numberComments++;
+            if (strpos($payload->getComment(), '+1') !== false) {
+                $pullRequest->numberApprovals = $pullRequest->numberApprovals++;
+            }
+            if (strpos($payload->getComment(), '-1') !== false) {
+                $pullRequest->numberDisapprovals = $pullRequest->numberDisapprovals++;
+            }
             $this->odm->persist($pullRequest);
             $this->odm->flush();
             return new Response('Pull request updated', Response::HTTP_OK);
         }
         return new Response('Pull request not found', Response::HTTP_GONE);
+    }
+
+    private function getPullRequest($payload)
+    {
+        return $this->odm
+            ->getRepository('Src\\Entities\\PullRequest')
+            ->findOneBy(
+                [
+                    'repositoryId' => $payload->getRepositoryId(),
+                    'number' => $payload->getPullRequestNumber(),
+                    'vcs' => $payload::VCSNAME
+                ]
+            );
     }
 }

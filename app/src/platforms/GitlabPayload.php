@@ -49,28 +49,25 @@ final class GitlabPayload extends Payload implements PayloadInterface
     /**
      * Gitlab doesn't provide any comment info in webhooks right now,
      * so this method just returns false
-     * @param  PullRequest $pullRequest
      * @return bool
      */
-    public function updateComments(PullRequest $pullRequest)
+    public function getComment()
     {
         return false;
     }
 
-    public function getPullRequestNumberFromPayload()
+    public function getPullRequestNumber()
     {
         return $this->payload['object_attributes']['id'];
     }
 
-    public function getRepositoryIdFromPayload()
+    public function getRepositoryId()
     {
         return $this->payload['object_attributes']['target_project_id'];
     }
 
-    public function setClosed(PullRequest $pullRequest)
+    public function getEventDateTime()
     {
-        $pullRequest->status = 'closed';
-        $pullRequest->updatedAt = $this->payload['updated_at'];
-        return $pullRequest;
+        return $this->payload['updated_at'];
     }
 }

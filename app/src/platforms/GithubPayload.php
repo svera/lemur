@@ -49,24 +49,17 @@ final class GithubPayload extends Payload implements PayloadInterface
             $this->headers->get('x-github-event') == 'commit_comment';
     }
 
-    public function updateComments(PullRequest $pullRequest)
+    public function getComment()
     {
-        $pullRequest->numberComments = $pullRequest->numberComments++;
-        if (strpos($this->payload['comment']['body'], '+1') !== false) {
-            $pullRequest->numberApprovals = $pullRequest->numberApprovals++;
-        }
-        if (strpos($this->payload['comment']['body'], '-1') !== false) {
-            $pullRequest->numberDisapprovals = $pullRequest->numberDisapprovals++;
-        }
-        return $pullRequest;
+        return $this->payload['comment']['body'];
     }
 
-    public function getRepositoryIdFromPayload()
+    public function getRepositoryId()
     {
         return $this->payload['repository']['id'];
     }
 
-    public function getPullRequestNumberFromPayload()
+    public function getPullRequestNumber()
     {
         switch ($this->headers->get('x-github-event'))
         {
@@ -83,10 +76,11 @@ final class GithubPayload extends Payload implements PayloadInterface
         return null;
     }
 
-    public function setClosed(PullRequest $pullRequest)
+    public function getEventDateTime()
     {
-        $pullRequest->status = 'closed';
-        $pullRequest->updatedAt = $this->payload['pull_request']['closed_at'];
-        return $pullRequest;
+        if ($this->isClosePullRequestPayload()) {
+            return $this->payload['pull_request']['closed_at'];
+        }
+        return $this->payload['pull_request']['updated_at'];
     }
 }
