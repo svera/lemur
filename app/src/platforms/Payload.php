@@ -27,4 +27,21 @@ abstract class Payload
         $this->payload = $httpRequest->request->all();
         $this->headers = $httpRequest->headers;
     }
+
+    /**
+     * Returns payload type
+     * @return string
+     */
+    public function getType()
+    {
+        if ($this->isCreatePullRequestPayload()) {
+            return 'pull-request-open';
+        }
+        if ($this->isClosePullRequestPayload()) {
+            return 'pull-request-close';
+        }
+        if ($this->isCreateCommentPayload()) {
+            return 'pull-request-comment';
+        }
+    }
 }

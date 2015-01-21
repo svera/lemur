@@ -15,7 +15,8 @@
     "autoload": {
         "psr-4": { 
             "Src\\Entities\\": "src/entities/",
-            "Src\\Platforms\\": "src/platforms/"
+            "Src\\Platforms\\": "src/platforms/",
+            "Src\\Controllers\\": "src/controllers/"
         }
     }
 }

@@ -51,12 +51,7 @@ class ControllersTest extends WebTestCase
                         Response::HTTP_NOT_FOUND
                     ],
                     [
-                        '/unexistent-platform/pull-request',
-                        'POST',
-                        Response::HTTP_UNPROCESSABLE_ENTITY
-                    ],
-                    [
-                        '/unexistent-platform/pull-request-comment',
+                        '/unexistent-platform/event',
                         'POST',
                         Response::HTTP_UNPROCESSABLE_ENTITY
                     ]
@@ -86,8 +81,8 @@ class ControllersTest extends WebTestCase
     public function noPayloadOrWrongPayloadProvider()
     {
         return [
-                  ['/github/pull-request', ''],
-                  ['/gitlab/pull-request', '']
+                  ['/github/event', ''],
+                  ['/gitlab/event', '']
                ];
     }
 
@@ -112,7 +107,7 @@ class ControllersTest extends WebTestCase
     {
         return [
                     [
-                        '/github/pull-request',
+                        '/github/event',
                         [
                             'CONTENT_TYPE' => 'application/json',
                         ],
@@ -120,7 +115,7 @@ class ControllersTest extends WebTestCase
                         Response::HTTP_CREATED
                     ],
                     [
-                        '/github/pull-request-comment',
+                        '/github/event',
                         [
                             'CONTENT_TYPE' => 'application/json',
                             'HTTP_X-GitHub-Event' => 'pull_request_review_comment'
@@ -129,7 +124,7 @@ class ControllersTest extends WebTestCase
                         Response::HTTP_OK
                     ],
                     [
-                        '/github/pull-request-comment',
+                        '/github/event',
                         [
                             'CONTENT_TYPE' => 'application/json',
                             'HTTP_X-GitHub-Event' => 'issue_comment'
@@ -138,7 +133,7 @@ class ControllersTest extends WebTestCase
                         Response::HTTP_OK
                     ],
                     [
-                        '/github/pull-request-comment',
+                        '/github/event',
                         [
                             'CONTENT_TYPE' => 'application/json',
                             'HTTP_X-GitHub-Event' => 'pull_request_review_comment'
@@ -147,7 +142,7 @@ class ControllersTest extends WebTestCase
                         Response::HTTP_GONE
                     ],
                     [
-                        '/gitlab/pull-request',
+                        '/gitlab/event',
                         [
                             'CONTENT_TYPE' => 'application/json',
                         ],
@@ -155,7 +150,7 @@ class ControllersTest extends WebTestCase
                         Response::HTTP_CREATED
                     ],
                     [
-                        '/gitlab/pull-request-comment',
+                        '/gitlab/event',
                         [
                             'CONTENT_TYPE' => 'application/json',
                         ],
@@ -186,22 +181,22 @@ class ControllersTest extends WebTestCase
     {
         return [
                     [
-                        '/github/pull-request',
+                        '/github/event',
                         file_get_contents(__DIR__.'/fixtures/githubClosePullRequestPayload.json'),
                         Response::HTTP_OK
                     ],
                     [
-                        '/gitlab/pull-request',
+                        '/gitlab/event',
                         file_get_contents(__DIR__.'/fixtures/gitlabCloseMergeRequestPayload.json'),
                         Response::HTTP_OK
                     ],
                     [
-                        '/github/pull-request',
+                        '/github/event',
                         file_get_contents(__DIR__.'/fixtures/githubCloseUnenxistentPullRequestPayload.json'),
                         Response::HTTP_GONE
                     ],
                     [
-                        '/gitlab/pull-request',
+                        '/gitlab/event',
                         file_get_contents(__DIR__.'/fixtures/gitlabCloseUnenxistentMergeRequestPayload.json'),
                         Response::HTTP_GONE
                     ]
