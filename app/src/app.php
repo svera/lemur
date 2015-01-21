@@ -23,7 +23,7 @@ if ($environment == 'devel') {
 if ($environment == 'prod' || $environment == 'devel') {
     try {
         require __DIR__.'/config/secrets.php';
-    } catch (FileNotFoundException $exception) {
+    } catch (Exception $exception) {
         return new Response('Secrets file not found', Response::HTTP_INTERNAL_SERVER_ERROR);
     }
 } else {
