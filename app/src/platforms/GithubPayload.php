@@ -95,4 +95,9 @@ final class GithubPayload extends Payload implements PayloadInterface
         }
         return $this->payload['pull_request']['updated_at'];
     }
+
+    public function isPingPayload()
+    {
+        return $this->headers->get('x-github-event') == 'ping';
+    }
 }

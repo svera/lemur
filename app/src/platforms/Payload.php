@@ -43,5 +43,17 @@ abstract class Payload
         if ($this->isCreateCommentPayload()) {
             return 'pull-request-comment';
         }
+        if ($this->isPingPayload()) {
+            return 'ping';
+        }
+    }
+
+    /**
+     * Return wether a payload is a ping one or not
+     * @return boolean
+     */
+    public function isPingPayload()
+    {
+        return false;
     }
 }

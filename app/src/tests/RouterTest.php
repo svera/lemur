@@ -42,6 +42,26 @@ class RouterTest extends WebTestCase
         $this->assertEquals($expected, $client->getResponse()->getStatusCode());
     }
 
+    public function testPing()
+    {
+        $client = $this->createClient();
+        $client->request(
+            'POST',
+            '/github/event',
+            [],
+            [],
+            [
+                'CONTENT_TYPE' => 'application/json',
+                'HTTP_X-GitHub-Event' => 'ping'
+            ],
+            ''
+        );
+        $this->assertEquals(
+            Response::HTTP_OK,
+            $client->getResponse()->getStatusCode()
+        );
+    }
+
     public function nonExistentUrlProvider()
     {
         return [

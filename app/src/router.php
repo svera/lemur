@@ -57,6 +57,8 @@ $app->post('/{vcsName}/event', function(Request $httpRequest, $vcsName) use ($ap
             return $pullRequestController->close($payload);
         case 'pull-request-comment':
             return $pullRequestController->update($payload);
+        case 'ping':
+            return new Response('OK', Response::HTTP_OK);
         default:
             return new Response('Payload error', Response::HTTP_BAD_REQUEST);
     }

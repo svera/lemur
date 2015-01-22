@@ -18,8 +18,8 @@ if ($environment == 'devel') {
 }
 
 try {
-    require $settingsFolder.'/settings.php';
-    require $settingsFolder.'/secrets.php';
+    include $settingsFolder.'/settings.php';
+    include $settingsFolder.'/secrets.php';
 } catch (Exception $exception) {
     return new Response(
         'Config file not found. Please check that needed config files are present

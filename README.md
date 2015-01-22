@@ -41,7 +41,7 @@ by the supported platforms:
 
 #### Github
 
-Go to the repository settings and select *Webhooks & Services > Webhooks*. Once there, associate ```<your domain>/pull-request``` to the *Pull Request* event and ```<your domain>/pull-request-comment``` to the *Pull Request review comment*, *Issue comment* and
+Go to the repository settings and select *Webhooks & Services > Webhooks*. Once there, associate ```<your domain>/event``` to the *Pull Request*, *Pull Request review comment*, *Issue comment* and
 *Commit comment* events.
 
 #### Gitlab
