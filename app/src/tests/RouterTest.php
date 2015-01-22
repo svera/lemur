@@ -6,7 +6,7 @@ require_once __DIR__.'/../../vendor/autoload.php';
 use Silex\WebTestCase;
 use Symfony\Component\HttpFoundation\Response;
 
-class ControllersTest extends WebTestCase
+class RouterTest extends WebTestCase
 {
     public function createApplication()
     {

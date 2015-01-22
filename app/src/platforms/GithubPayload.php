@@ -33,12 +33,18 @@ final class GithubPayload extends Payload implements PayloadInterface
 
     public function isCreatePullRequestPayload()
     {
-        return $this->payload['action'] == 'opened' || $this->payload['action'] == 'reopened';
+        if (array_key_exists('action', $this->payload)) {
+            return $this->payload['action'] == 'opened' || $this->payload['action'] == 'reopened';
+        }
+        return false;
     }
 
     public function isClosePullRequestPayload()
     {
-        return $this->payload['action'] == 'closed';
+        if (array_key_exists('action', $this->payload)) {
+            return $this->payload['action'] == 'closed';
+        }
+        return false;
     }
 
     public function isCreateCommentPayload()
@@ -51,12 +57,18 @@ final class GithubPayload extends Payload implements PayloadInterface
 
     public function getComment()
     {
-        return $this->payload['comment']['body'];
+        if (array_key_exists('comment', $this->payload)) {
+            return $this->payload['comment']['body'];
+        }
+        return false;
     }
 
     public function getRepositoryId()
     {
-        return $this->payload['repository']['id'];
+        if (array_key_exists('repository', $this->payload)) {
+            return $this->payload['repository']['id'];
+        }
+        return false;
     }
 
     public function getPullRequestNumber()

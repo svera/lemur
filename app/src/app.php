@@ -10,25 +10,22 @@ $app = new Silex\Application();
 $environment = getenv('LEMUR_ENV');
 
 if ($environment == 'devel') {
-    ini_set('error_reporting', E_ALL);
-    ini_set('display_errors', '1');
-    ini_set('display_startup_errors', '1');
-    require __DIR__.'/config/devel.php';
+    $settingsFolder = __DIR__.'/config/devel';
 } elseif ($environment == 'test') {
-    require __DIR__.'/config/test.php';
+    $settingsFolder = __DIR__.'/config/test';
 } else {
-    require __DIR__.'/config/prod.php';
+    $settingsFolder = __DIR__.'/config/prod';
 }
 
-if ($environment == 'prod' || $environment == 'devel') {
-    try {
-        require __DIR__.'/config/secrets.php';
-    } catch (Exception $exception) {
-        return new Response('Secrets file not found', Response::HTTP_INTERNAL_SERVER_ERROR);
-    }
-} else {
-    $app['config.secrets.github_client_id'] = '';
-    $app['config.secrets.github_client_secret'] = '';
+try {
+    require $settingsFolder.'/settings.php';
+    require $settingsFolder.'/secrets.php';
+} catch (Exception $exception) {
+    return new Response(
+        'Config file not found. Please check that needed config files are present
+         and have read permission',
+        Response::HTTP_INTERNAL_SERVER_ERROR
+    );
 }
 
 $app->register(new MongoDBODMServiceProvider(), array(

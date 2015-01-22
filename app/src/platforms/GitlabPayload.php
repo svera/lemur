@@ -27,12 +27,18 @@ final class GitlabPayload extends Payload implements PayloadInterface
 
     public function isCreatePullRequestPayload()
     {
-        return $this->payload['object_attributes']['state'] == 'opened';
+        if (array_key_exists('object_attributes', $this->payload)) {
+            return $this->payload['object_attributes']['state'] == 'opened';
+        }
+        return false;
     }
 
     public function isClosePullRequestPayload()
     {
-        return $this->payload['object_attributes']['state'] == 'closed';
+        if (array_key_exists('object_attributes', $this->payload)) {
+            return $this->payload['object_attributes']['state'] == 'closed';
+        }
+        return false;
     }
 
     /**
@@ -58,16 +64,25 @@ final class GitlabPayload extends Payload implements PayloadInterface
 
     public function getPullRequestNumber()
     {
-        return $this->payload['object_attributes']['id'];
+        if (array_key_exists('object_attributes', $this->payload)) {
+            return $this->payload['object_attributes']['id'];
+        }
+        return false;
     }
 
     public function getRepositoryId()
     {
-        return $this->payload['object_attributes']['target_project_id'];
+        if (array_key_exists('object_attributes', $this->payload)) {
+            return $this->payload['object_attributes']['target_project_id'];
+        }
+        return false;
     }
 
     public function getEventDateTime()
     {
-        return $this->payload['updated_at'];
+        if (array_key_exists('updated_at', $this->payload)) {
+            return $this->payload['updated_at'];
+        }
+        return false;
     }
 }
