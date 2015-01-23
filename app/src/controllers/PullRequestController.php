@@ -48,10 +48,10 @@ class PullRequestController
         if ($pullRequest) {
             $pullRequest->numberComments++;
             if (strpos($payload->getComment(), '+1') !== false) {
-                $pullRequest->numberApprovals = $pullRequest->numberApprovals++;
+                $pullRequest->numberApprovals++;
             }
             if (strpos($payload->getComment(), '-1') !== false) {
-                $pullRequest->numberDisapprovals = $pullRequest->numberDisapprovals++;
+                $pullRequest->numberDisapprovals++;
             }
             $this->odm->persist($pullRequest);
             $this->odm->flush();
