@@ -22,7 +22,7 @@ var refresh = function() {
     localStorage.setItem('numberPullRequests', data.number_pull_requests);
   })
   .fail(function(jqXHR, textStatus, errorThrown) {
-    if (jqXHR.status == 403) {
+    if (jqXHR.status == '403') {
       document.location('/?warn=You+need+to+be+logged+in+to+access+this+page.');
     }
   })
