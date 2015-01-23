@@ -41,17 +41,17 @@ class PullRequestController
         return new Response('Pull request not found', Response::HTTP_GONE);
     }
 
-    public function update($payload)
+    public function updateComments($payload)
     {
         $pullRequest = $this->getPullRequest($payload);
 
         if ($pullRequest) {
-            $pullRequest->numberComments++;
             if (strpos($payload->getComment(), '+1') !== false) {
                 $pullRequest->numberApprovals++;
-            }
-            if (strpos($payload->getComment(), '-1') !== false) {
+            } elseif (strpos($payload->getComment(), '-1') !== false) {
                 $pullRequest->numberDisapprovals++;
+            } else {
+                $pullRequest->numberComments++;
             }
             $this->odm->persist($pullRequest);
             $this->odm->flush();

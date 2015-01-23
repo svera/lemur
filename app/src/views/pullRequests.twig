@@ -31,7 +31,7 @@
               </div>
             {% endif %}
           </div>
-          <h4><span class="text-muted">{{ pullRequest.number }}</span> <a href="{{ pullRequest.htmlUrl }}">{{ pullRequest.title }}</a></h4>
+          <h4><span class="text-muted">{{ pullRequest.number }}</span> <a href="{{ pullRequest.htmlUrl }}" target="_blank">{{ pullRequest.title }}</a></h4>
           <p><em>Created by {{ pullRequest.createdBy }} <time class="timeago" datetime="{{ pullRequest.createdAt }}">{{ pullRequest.createdAt }}</time></em></p>
         </li>
       {% endfor %}
