@@ -46,9 +46,9 @@ class PullRequestController
         $pullRequest = $this->getPullRequest($payload);
 
         if ($pullRequest) {
-            if (strpos($payload->getComment(), '+1') !== false) {
+            if ($this->isApproval($payload->getComment())) {
                 $pullRequest->numberApprovals++;
-            } elseif (strpos($payload->getComment(), '-1') !== false) {
+            } elseif ($this->isDisapproval($payload->getComment())) {
                 $pullRequest->numberDisapprovals++;
             } else {
                 $pullRequest->numberComments++;
@@ -58,6 +58,18 @@ class PullRequestController
             return new Response('Pull request updated', Response::HTTP_OK);
         }
         return new Response('Pull request not found', Response::HTTP_GONE);
+    }
+
+    private function isApproval($comment)
+    {
+        return strpos($comment(), '+1') === 0 ||
+                strpos($comment(), ':+1:') === 0;
+    }
+
+    private function isDisapproval($comment)
+    {
+        return strpos($comment(), '-1') === 0 ||
+                strpos($comment(), ':-1:') === 0;
     }
 
     private function getPullRequest($payload)
