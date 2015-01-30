@@ -62,14 +62,14 @@ class PullRequestController
 
     private function isApproval($comment)
     {
-        return strpos($comment(), '+1') === 0 ||
-                strpos($comment(), ':+1:') === 0;
+        return strpos($comment, '+1') === 0 ||
+                strpos($comment, ':+1:') === 0;
     }
 
     private function isDisapproval($comment)
     {
-        return strpos($comment(), '-1') === 0 ||
-                strpos($comment(), ':-1:') === 0;
+        return strpos($comment, '-1') === 0 ||
+                strpos($comment, ':-1:') === 0;
     }
 
     private function getPullRequest($payload)
